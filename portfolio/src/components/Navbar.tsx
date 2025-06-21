@@ -50,7 +50,7 @@ export default function Navbar() {
             className="text-2xl font-bold gradient-text cursor-pointer"
             onClick={() => scrollToSection("#home")}
           >
-            AJ
+            Prabodhi Dissanayake
           </motion.div>
 
           {/* Desktop Navigation */}
