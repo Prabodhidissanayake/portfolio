@@ -13,10 +13,9 @@ export default function Hero() {
   };
 
   const downloadResume = () => {
-    // Replace with your actual resume URL
     const link = document.createElement("a");
     link.href = "/resume.pdf";
-    link.download = "Alex_Johnson_Resume.pdf";
+    link.download = "Prabodhi_Resume.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

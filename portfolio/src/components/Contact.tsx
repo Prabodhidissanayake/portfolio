@@ -9,7 +9,7 @@ import {
   Send,
   Github,
   Linkedin,
-  Twitter,
+  Instagram,
 } from "lucide-react";
 
 export default function Contact() {
@@ -37,14 +37,28 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
     try {
-      // Replace this with your actual form submission logic
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      setSubmitStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const response = await fetch("https://formspree.io/f/mzzgawva", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setSubmitStatus("error");
+      }
     } catch (error) {
+      console.error("Form submission error:", error);
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
@@ -56,20 +70,20 @@ export default function Contact() {
     {
       icon: Mail,
       label: "Email",
-      value: "alex@example.com",
-      href: "mailto:alex@example.com",
+      value: "prabodhi38@gmail.com",
+      href: "mailto:prabodhi38@gmail.com",
     },
     {
       icon: Phone,
       label: "Phone",
-      value: "+1 (555) 123-4567",
-      href: "tel:+15551234567",
+      value: "0647726243",
+      href: "tel:+31647726243",
     },
     {
       icon: MapPin,
       label: "Location",
-      value: "San Francisco, CA",
-      href: "https://maps.google.com/?q=San+Francisco,CA",
+      value: "The Netherlands",
+      href: "https://www.google.com/maps/place/Netherlands/@51.818959,5.4725076,8.51z/data=!4m6!3m5!1s0x47c609c3db87e4bb:0xb3a175ceffbd0a9f!8m2!3d52.132633!4d5.291266!16zL20vMDU5ajI?entry=ttu&g_ep=EgoyMDI1MDYxNy4wIKXMDSoASAFQAw%3D%3D",
     },
   ];
 
@@ -77,20 +91,20 @@ export default function Contact() {
     {
       icon: Github,
       label: "GitHub",
-      href: "https://github.com/username",
+      href: "https://github.com/Prabodhidissanayake",
       color: "hover:text-gray-900 dark:hover:text-white",
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
-      href: "https://linkedin.com/in/username",
+      href: "https://www.linkedin.com/in/prabodhi-dissanayake/",
       color: "hover:text-blue-600",
     },
     {
-      icon: Twitter,
-      label: "Twitter",
-      href: "https://twitter.com/username",
-      color: "hover:text-blue-400",
+      icon: Instagram,
+      label: "Instagram",
+      href: "https://www.instagram.com/amaa.a.y.uu/",
+      color: "hover:text-pink-500",
     },
   ];
 

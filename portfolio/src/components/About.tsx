@@ -13,7 +13,7 @@ const skillCategories = {
     "CSS",
     "SASS",
     "Tailwind CSS",
-    "styled-components"
+    "styled-components",
   ],
   "Libraries & Frameworks": [
     "Redux",
@@ -21,7 +21,7 @@ const skillCategories = {
     "Storybook",
     "Framer Motion",
     "Lucide React",
-    "Zod"
+    "Zod",
   ],
   "Backend & Database": [
     "Node.js",
@@ -29,7 +29,7 @@ const skillCategories = {
     "REST API",
     "Elasticsearch",
     "MongoDB",
-    "PostgreSQL"
+    "PostgreSQL",
   ],
   "Testing & Quality Assurance": [
     "Jest",
@@ -37,7 +37,7 @@ const skillCategories = {
     "Test Driven Development (TDD)",
     "Unit Testing",
     "Integration Testing",
-    "Code Coverage"
+    "Code Coverage",
   ],
   "Tools & DevOps": [
     "Git",
@@ -47,7 +47,7 @@ const skillCategories = {
     "CI/CD",
     "npm",
     "VS Code",
-    "Figma"
+    "Figma",
   ],
   "Methodologies & Practices": [
     "Agile",
@@ -55,8 +55,8 @@ const skillCategories = {
     "UI/UX Design",
     "Responsive Design",
     "Performance Optimization",
-    "Code Review"
-  ]
+    "Code Review",
+  ],
 };
 
 export default function About() {
@@ -112,19 +112,22 @@ export default function About() {
           >
             <div className="space-y-6">
               <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                Currently working as a Frontend Developer at SuperYacht Times in Amsterdam, 
-                where I've been contributing to innovative web solutions since June 2023. 
-                I graduated with First Class Honors in Software Engineering from the University of Plymouth 
-                and completed an intensive Full Stack Bootcamp at School of Applied Technology (salt) in Amsterdam.
+                Currently working as a Frontend Developer at SuperYacht Times in
+                Amsterdam, where I have been contributing to innovative web
+                solutions since June 2023. I graduated with First Class Honors
+                in Software Engineering from the University of Plymouth and
+                completed an intensive Full Stack Bootcamp at School of Applied
+                Technology (salt) in Amsterdam.
               </p>
 
               <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                My expertise spans modern frontend technologies with a strong foundation in React.js, Next.js, 
-                and TypeScript. I'm passionate about Test Driven Development, having practiced TDD and mob programming 
-                extensively during my bootcamp training. I believe in creating clean, maintainable code and 
-                delivering exceptional user experiences.
+                My expertise spans modern frontend technologies with a strong
+                foundation in React.js, Next.js, and TypeScript. I am passionate
+                about Test Driven Development, having practiced TDD and mob
+                programming extensively during my bootcamp training. I believe
+                in creating clean, maintainable code and delivering exceptional
+                user experiences.
               </p>
-
             </div>
           </motion.div>
         </div>
@@ -139,43 +142,45 @@ export default function About() {
           <h3 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-16 text-center">
             Skills & Technologies
           </h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            {Object.entries(skillCategories).map(([category, skills], categoryIndex) => (
-              <motion.div
-                key={category}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 card-hover border border-gray-100 dark:border-gray-700"
-              >
-                <div className="flex items-center mb-6">
-                  <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mr-4"></div>
-                  <h4 className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {category}
-                  </h4>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  {skills.map((skill, index) => (
-                    <motion.span
-                      key={skill}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ 
-                        duration: 0.4, 
-                        delay: (categoryIndex * 0.1) + (index * 0.05) 
-                      }}
-                      viewport={{ once: true }}
-                      whileHover={{ scale: 1.08, y: -2 }}
-                      className="px-5 py-3 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-800 dark:text-blue-200 rounded-full text-sm font-semibold border border-blue-200 dark:border-blue-700 cursor-default transition-all duration-200 shadow-sm hover:shadow-md"
-                    >
-                      {skill}
-                    </motion.span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+            {Object.entries(skillCategories).map(
+              ([category, skills], categoryIndex) => (
+                <motion.div
+                  key={category}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 card-hover border border-gray-100 dark:border-gray-700"
+                >
+                  <div className="flex items-center mb-6">
+                    <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mr-4"></div>
+                    <h4 className="text-2xl font-bold text-gray-900 dark:text-white">
+                      {category}
+                    </h4>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    {skills.map((skill, index) => (
+                      <motion.span
+                        key={skill}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          duration: 0.4,
+                          delay: categoryIndex * 0.1 + index * 0.05,
+                        }}
+                        viewport={{ once: true }}
+                        whileHover={{ scale: 1.08, y: -2 }}
+                        className="px-5 py-3 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-800 dark:text-blue-200 rounded-full text-sm font-semibold border border-blue-200 dark:border-blue-700 cursor-default transition-all duration-200 shadow-sm hover:shadow-md"
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
+                </motion.div>
+              )
+            )}
           </div>
         </motion.div>
       </div>
