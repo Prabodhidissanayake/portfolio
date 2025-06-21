@@ -3,24 +3,61 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const skills = [
-  "React",
-  "Next.js",
-  "TypeScript",
-  "Tailwind CSS",
-  "JavaScript",
-  "HTML5",
-  "CSS3",
-  "SCSS",
-  "Framer Motion",
-  "React Query",
-  "Zustand",
-  "Firebase",
-  "Git",
-  "Figma",
-  "Responsive Design",
-  "Performance Optimization",
-];
+const skillCategories = {
+  "Frontend Technologies": [
+    "React.js",
+    "Next.js",
+    "JavaScript",
+    "TypeScript",
+    "HTML",
+    "CSS",
+    "SASS",
+    "Tailwind CSS",
+    "styled-components"
+  ],
+  "Libraries & Frameworks": [
+    "Redux",
+    "React Query",
+    "Storybook",
+    "Framer Motion",
+    "Lucide React",
+    "Zod"
+  ],
+  "Backend & Database": [
+    "Node.js",
+    "Express.js",
+    "REST API",
+    "Elasticsearch",
+    "MongoDB",
+    "PostgreSQL"
+  ],
+  "Testing & Quality Assurance": [
+    "Jest",
+    "Mocha",
+    "Test Driven Development (TDD)",
+    "Unit Testing",
+    "Integration Testing",
+    "Code Coverage"
+  ],
+  "Tools & DevOps": [
+    "Git",
+    "GitHub",
+    "Docker",
+    "AWS",
+    "CI/CD",
+    "npm",
+    "VS Code",
+    "Figma"
+  ],
+  "Methodologies & Practices": [
+    "Agile",
+    "Mob Programming",
+    "UI/UX Design",
+    "Responsive Design",
+    "Performance Optimization",
+    "Code Review"
+  ]
+};
 
 export default function About() {
   return (
@@ -41,7 +78,7 @@ export default function About() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
           {/* Profile Image */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -54,7 +91,7 @@ export default function About() {
               <div className="w-80 h-80 rounded-full overflow-hidden shadow-2xl">
                 <Image
                   src="/profile.jpg"
-                  alt="Alex Johnson"
+                  alt="Prabodhi Dissanayake"
                   width={320}
                   height={320}
                   className="w-full h-full object-cover"
@@ -75,43 +112,72 @@ export default function About() {
           >
             <div className="space-y-6">
               <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                With over 4 years of experience in frontend development, I have
-                had the privilege of working with startups and established
-                companies to create web applications that users love. My passion
-                lies in transforming complex problems into simple, beautiful,
-                and intuitive solutions.
+                Currently working as a Frontend Developer at SuperYacht Times in Amsterdam, 
+                where I've been contributing to innovative web solutions since June 2023. 
+                I graduated with First Class Honors in Software Engineering from the University of Plymouth 
+                and completed an intensive Full Stack Bootcamp at School of Applied Technology (salt) in Amsterdam.
               </p>
 
               <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                I believe in the power of clean code, attention to detail, and
-                continuous learning. When I am not coding, you will find me
-                exploring new technologies, contributing to open-source
-                projects, or sharing knowledge with the developer community.
+                My expertise spans modern frontend technologies with a strong foundation in React.js, Next.js, 
+                and TypeScript. I'm passionate about Test Driven Development, having practiced TDD and mob programming 
+                extensively during my bootcamp training. I believe in creating clean, maintainable code and 
+                delivering exceptional user experiences.
               </p>
-            </div>
 
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                Skills & Technologies
-              </h3>
-              <div className="flex flex-wrap gap-3">
-                {skills.map((skill, index) => (
-                  <motion.span
-                    key={skill}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.1 }}
-                    className="px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium border border-blue-200 dark:border-blue-700 cursor-default"
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
             </div>
           </motion.div>
         </div>
+
+        {/* Skills Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <h3 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-16 text-center">
+            Skills & Technologies
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {Object.entries(skillCategories).map(([category, skills], categoryIndex) => (
+              <motion.div
+                key={category}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 card-hover border border-gray-100 dark:border-gray-700"
+              >
+                <div className="flex items-center mb-6">
+                  <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mr-4"></div>
+                  <h4 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    {category}
+                  </h4>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  {skills.map((skill, index) => (
+                    <motion.span
+                      key={skill}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ 
+                        duration: 0.4, 
+                        delay: (categoryIndex * 0.1) + (index * 0.05) 
+                      }}
+                      viewport={{ once: true }}
+                      whileHover={{ scale: 1.08, y: -2 }}
+                      className="px-5 py-3 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-800 dark:text-blue-200 rounded-full text-sm font-semibold border border-blue-200 dark:border-blue-700 cursor-default transition-all duration-200 shadow-sm hover:shadow-md"
+                    >
+                      {skill}
+                    </motion.span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );

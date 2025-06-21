@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Alex Johnson - Frontend Developer Portfolio",
+  title: "Prabodhi Dissanayake - Frontend Developer Portfolio",
   description:
     "Creative Frontend Developer focused on building clean and interactive user experiences. Specializing in React, Next.js, and modern web technologies.",
   keywords: [
@@ -14,21 +14,27 @@ export const metadata: Metadata = {
     "nextjs",
     "typescript",
     "web development",
+    "HTML5",
+    "CSS3",
+    "JavaScript",
+    "Redux",
+    "Tailwind",
+    "REST",
   ],
-  authors: [{ name: "Alex Johnson" }],
-  creator: "Alex Johnson",
+  authors: [{ name: "Prabodhi Dissanayake" }],
+  creator: "Prabodhi Dissanayake",
   openGraph: {
-    title: "Alex Johnson - Frontend Developer",
+    title: "Prabodhi Dissanayake - Frontend Developer",
     description:
       "Creative Frontend Developer focused on building clean and interactive user experiences.",
-    url: "https://yourportfolio.com",
-    siteName: "Alex Johnson Portfolio",
+    url: "", //Todo: replace website url after we deploy it
+    siteName: "Prabodhi Dissanayake Portfolio",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Alex Johnson - Frontend Developer",
+        alt: "Prabodhi Dissanayake - Frontend Developer",
       },
     ],
     locale: "en_US",
@@ -36,7 +42,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alex Johnson - Frontend Developer",
+    title: "Prabodhi Dissanayake - Frontend Developer",
     description:
       "Creative Frontend Developer focused on building clean and interactive user experiences.",
     images: ["/og-image.jpg"],

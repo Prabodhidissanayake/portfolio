@@ -51,7 +51,7 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="text-5xl lg:text-7xl font-bold text-gray-900 dark:text-white"
             >
-              Alex Johnson
+              Prabodhi Dissanayake
             </motion.h1>
 
             <motion.h2
