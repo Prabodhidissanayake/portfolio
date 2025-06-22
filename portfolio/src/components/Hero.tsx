@@ -1,16 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUp, Download, Eye } from "lucide-react";
+import { ArrowUp, Download } from "lucide-react";
 import { Player } from "@lottiefiles/react-lottie-player";
 
 export default function Hero() {
-  const scrollToProjects = () => {
-    const element = document.querySelector("#projects");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  // const scrollToProjects = () => {
+  //   const element = document.querySelector("#projects");
+  //   if (element) {
+  //     element.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // };
   const scrollToHome = () => {
     const element = document.querySelector("#home");
     if (element) {
@@ -86,7 +86,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 1 }}
             className="flex flex-col sm:flex-row gap-4"
           >
-            <motion.button
+            {/* <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={scrollToProjects}
@@ -94,7 +94,7 @@ export default function Hero() {
             >
               <Eye className="mr-2" size={20} />
               View My Work
-            </motion.button>
+            </motion.button> */}
 
             <motion.button
               whileHover={{ scale: 1.05 }}

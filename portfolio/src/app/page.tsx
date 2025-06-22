@@ -9,6 +9,7 @@ import Experience from "@/components/Experience";
 import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
+import Games from "@/components/Games";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -31,6 +32,7 @@ export default function Home() {
         <Projects />
         <Experience />
         <Education />
+        <Games /> 
         <Contact />
       </main>
     </div>
