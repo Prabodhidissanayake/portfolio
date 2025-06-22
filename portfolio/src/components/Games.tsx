@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Gamepad2,
@@ -562,9 +562,9 @@ const SnakeGame = () => {
       if (!isHead) return "";
       const [dirY, dirX] = direction;
       if (dirY === -1) return "↑"; // Up
-      if (dirY === 1) return "↓"; // Down
+      if (dirY === 1) return "↓";  // Down
       if (dirX === -1) return "←"; // Left
-      if (dirX === 1) return "→"; // Right
+      if (dirX === 1) return "→";  // Right
       return "→"; // Default right
     };
 
@@ -657,20 +657,6 @@ interface GameInfo {
 // Main Games Section Component
 export default function Games() {
   const [activeGame, setActiveGame] = useState<GameId>("memory");
-  const gameDisplayRef = useRef<HTMLDivElement>(null);
-
-  const handleGameSelect = (gameId: GameId) => {
-    setActiveGame(gameId);
-
-    // Scroll to game display area with smooth animation
-    setTimeout(() => {
-      gameDisplayRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "nearest",
-      });
-    }, 100); // Small delay to ensure the game has rendered
-  };
 
   const allGames: GameInfo[] = [
     {
@@ -723,92 +709,183 @@ export default function Games() {
           </p>
         </motion.div>
 
-        {/* Game Selection Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {allGames.map((game) => (
-            <motion.div
-              key={game.id}
-              whileHover={{ scale: 1.02, y: -5 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => handleGameSelect(game.id)}
-              className={`relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 ${
-                activeGame === game.id
-                  ? "ring-4 ring-blue-500 shadow-2xl"
-                  : "shadow-lg hover:shadow-xl"
-              } ${game.id === "snake" ? "hidden md:block" : ""}`}
-            >
-              {/* Background Gradient */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${game.bgGradient} opacity-10`}
-              />
-
-              {/* Active Game Indicator */}
-              {activeGame === game.id && (
+        {/* Desktop: Side-by-side layout, Mobile: Stacked layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          
+          {/* Mobile: Game Selection Cards (shown at top) */}
+          <div className="lg:hidden">
+            <div className="grid grid-cols-2 gap-4 mb-8">
+              {allGames.map((game) => (
                 <motion.div
-                  layoutId="activeIndicator"
-                  className="absolute top-3 right-3 w-3 h-3 bg-blue-500 rounded-full"
-                  transition={{ type: "spring", bounce: 0.3 }}
-                />
-              )}
-
-              {/* Card Content */}
-              <div className="relative p-6 bg-white dark:bg-gray-800 h-full">
-                <div className="flex items-start justify-between mb-4">
+                  key={game.id}
+                  whileHover={{ scale: 1.02, y: -5 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setActiveGame(game.id)}
+                  className={`relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 ${
+                    activeGame === game.id
+                      ? "ring-4 ring-blue-500 shadow-2xl"
+                      : "shadow-lg hover:shadow-xl"
+                  } ${game.id === "snake" ? "hidden md:block" : ""}`}
+                >
+                  {/* Background Gradient */}
                   <div
-                    className={`p-3 rounded-xl bg-gradient-to-br ${game.bgGradient} shadow-lg`}
-                  >
-                    <game.icon size={24} className="text-white" />
-                  </div>
+                    className={`absolute inset-0 bg-gradient-to-br ${game.bgGradient} opacity-10`}
+                  />
+                  
+                  {/* Active Game Indicator */}
                   {activeGame === game.id && (
                     <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="flex items-center space-x-1 text-xs font-medium text-blue-600 dark:text-blue-400"
-                    >
-                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-                      <span>ACTIVE</span>
-                    </motion.div>
+                      layoutId="activeIndicator"
+                      className="absolute top-3 right-3 w-3 h-3 bg-blue-500 rounded-full"
+                      transition={{ type: "spring", bounce: 0.3 }}
+                    />
                   )}
-                </div>
 
-                <div className="space-y-2">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                    {game.name}
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    {game.description}
-                  </p>
-                </div>
+                  {/* Card Content */}
+                  <div className="relative p-6 bg-white dark:bg-gray-800 h-full">
+                    <div className="flex items-start justify-between mb-4">
+                      <div
+                        className={`p-3 rounded-xl bg-gradient-to-br ${game.bgGradient} shadow-lg`}
+                      >
+                        <game.icon size={24} className="text-white" />
+                      </div>
+                      {activeGame === game.id && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="flex items-center space-x-1 text-xs font-medium text-blue-600 dark:text-blue-400"
+                        >
+                          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+                          <span>ACTIVE</span>
+                        </motion.div>
+                      )}
+                    </div>
 
-                {/* Hover Effect */}
+                    <div className="space-y-2">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                        {game.name}
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">
+                        {game.description}
+                      </p>
+                    </div>
+
+                    {/* Hover Effect */}
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r"
+                      style={{
+                        backgroundImage: `linear-gradient(to right, ${
+                          game.bgGradient.includes("purple")
+                            ? "#8B5CF6, #EC4899"
+                            : game.bgGradient.includes("yellow")
+                            ? "#F59E0B, #F97316"
+                            : "#10B981, #059669"
+                        })`,
+                      }}
+                      initial={{ scaleX: 0 }}
+                      whileHover={{ scaleX: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Active Game Display - Left side on desktop, below selection on mobile */}
+          <div className="lg:col-span-8">
+            {(() => {
+              const ActiveGameComponent = allGames.find(
+                (game) => game.id === activeGame
+              )?.component;
+              return ActiveGameComponent ? <ActiveGameComponent /> : null;
+            })()}
+          </div>
+
+          {/* Desktop: Game Selection Cards (shown on right side) */}
+          <div className="hidden lg:block lg:col-span-4">
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
+                Choose a Game
+              </h3>
+              {allGames.map((game) => (
                 <motion.div
-                  className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r"
-                  style={{
-                    backgroundImage: `linear-gradient(to right, ${
-                      game.bgGradient.includes("purple")
-                        ? "#8B5CF6, #EC4899"
-                        : game.bgGradient.includes("yellow")
-                        ? "#F59E0B, #F97316"
-                        : "#10B981, #059669"
-                    })`,
-                  }}
-                  initial={{ scaleX: 0 }}
-                  whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                  key={game.id}
+                  whileHover={{ scale: 1.02, x: -5 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setActiveGame(game.id)}
+                  className={`relative overflow-hidden rounded-xl cursor-pointer transition-all duration-300 ${
+                    activeGame === game.id
+                      ? "ring-4 ring-blue-500 shadow-xl"
+                      : "shadow-md hover:shadow-lg"
+                  }`}
+                >
+                  {/* Background Gradient */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${game.bgGradient} opacity-10`}
+                  />
+                  
+                  {/* Active Game Indicator */}
+                  {activeGame === game.id && (
+                    <motion.div
+                      layoutId="activeIndicatorDesktop"
+                      className="absolute top-3 right-3 w-3 h-3 bg-blue-500 rounded-full"
+                      transition={{ type: "spring", bounce: 0.3 }}
+                    />
+                  )}
 
-        {/* Active Game Display */}
-        <div ref={gameDisplayRef} className="max-w-2xl mx-auto">
-          {(() => {
-            const ActiveGameComponent = allGames.find(
-              (game) => game.id === activeGame
-            )?.component;
-            return ActiveGameComponent ? <ActiveGameComponent /> : null;
-          })()}
+                  {/* Card Content */}
+                  <div className="relative p-4 bg-white dark:bg-gray-800">
+                    <div className="flex items-center space-x-4">
+                      <div
+                        className={`p-2 rounded-lg bg-gradient-to-br ${game.bgGradient} shadow-md`}
+                      >
+                        <game.icon size={20} className="text-white" />
+                      </div>
+                      
+                      <div className="flex-1">
+                        <h4 className="font-bold text-gray-900 dark:text-white">
+                          {game.name}
+                        </h4>
+                        <p className="text-xs text-gray-600 dark:text-gray-300">
+                          {game.description}
+                        </p>
+                      </div>
+
+                      {activeGame === game.id && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="flex items-center space-x-1 text-xs font-medium text-blue-600 dark:text-blue-400"
+                        >
+                          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+                          <span>ACTIVE</span>
+                        </motion.div>
+                      )}
+                    </div>
+
+                    {/* Hover Effect */}
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r"
+                      style={{
+                        backgroundImage: `linear-gradient(to right, ${
+                          game.bgGradient.includes("purple")
+                            ? "#8B5CF6, #EC4899"
+                            : game.bgGradient.includes("yellow")
+                            ? "#F59E0B, #F97316"
+                            : "#10B981, #059669"
+                        })`,
+                      }}
+                      initial={{ scaleX: 0 }}
+                      whileHover={{ scaleX: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
