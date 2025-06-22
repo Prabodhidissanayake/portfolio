@@ -114,7 +114,7 @@ export default function Hero() {
             <Player
               autoplay
               loop
-              src="/animations/hero-animation.json"
+              src="/animations/coding.json"
               style={{ height: "500px", width: "100%" }}
             />
           </div>
