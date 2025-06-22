@@ -6,42 +6,73 @@ import { Calendar, MapPin, Award, BookOpen } from "lucide-react";
 const education = [
   {
     id: 1,
-    institution: "University of California, Berkeley",
-    degree: "Bachelor of Science in Computer Science",
-    location: "Berkeley, CA",
-    duration: "2015 - 2019",
+    institution: "University of Plymouth",
+    degree: "B.Sc (Hons) Software Engineering",
+    location: "United Kingdom",
+    duration: "2019 - 2022",
     description:
-      "Focused on web technologies, algorithms, and software engineering. Graduated Magna Cum Laude with a 3.8 GPA.",
+      "Graduated with First Class Honors. Attained understanding of Computer Science fundamentals, Java and Javascript programming languages, computing mathematics, and advanced concepts such as database management, algorithms, data structures, system analysis, design, and software development tools.",
     achievements: [
-      "Dean's List for 6 consecutive semesters",
-      "President of the Web Development Club",
-      "Winner of the Annual Hackathon (2018)",
+      "First Class Honors",
+      "Computer Science fundamentals",
+      "Advanced software development concepts",
     ],
     coursework: [
-      "Data Structures",
-      "Web Development",
-      "Database Systems",
-      "Software Engineering",
-      "Human-Computer Interaction",
+      "Java Programming",
+      "JavaScript Programming",
+      "Database Management",
+      "Algorithms & Data Structures",
+      "System Analysis & Design",
+      "Software Development Tools",
+      "Computing Mathematics",
     ],
   },
   {
     id: 2,
-    institution: "freeCodeCamp",
-    degree: "Full Stack Web Development Certification",
-    location: "Online",
-    duration: "2019",
+    institution: "School of Applied Technology",
+    degree: "Full Stack Bootcamp",
+    location: "Amsterdam",
+    duration: "January 2023 - April 2023",
     description:
-      "Comprehensive certification covering modern web development technologies and best practices.",
+      "Intensive 3-month training program with a focus on TDD, mob programming, and applied learning.",
     achievements: [
-      "Completed 300+ coding challenges",
-      "Built 5 full-stack projects",
-      "Contributed to open-source projects",
+      "Test Driven Development (TDD)",
+      "Mob Programming expertise",
+      "Applied learning approach",
+      "Intensive 3-month program",
     ],
-    coursework: ["HTML5 & CSS3", "JavaScript", "React", "Node.js", "MongoDB"],
+    coursework: [
+      "Test Driven Development",
+      "Mob Programming",
+      "Full Stack Development",
+      "Applied Learning",
+      "Modern Web Technologies",
+    ],
+  },
+  {
+    id: 3,
+    institution: "ICBT Campus",
+    degree: "Diploma in English Language & Literature",
+    location: "Sri Lanka",
+    duration: "2017 - 2018",
+    description:
+      "European Quality Assurance - ISO 9001 BUREAU VERITAS Certification",
+    achievements: [
+      "European Quality Assurance",
+      "ISO 9001 BUREAU VERITAS Certification",
+      "English Language proficiency",
+    ],
+    coursework: [
+      "English Language",
+      "Literature Studies",
+      "Writing & Communication",
+      "Critical Analysis",
+    ],
   },
 ];
 
+// COMMENTED OUT - Certifications section
+/*
 const certifications = [
   {
     name: "AWS Certified Cloud Practitioner",
@@ -62,6 +93,7 @@ const certifications = [
     credentialId: "META-REACT-345678",
   },
 ];
+*/
 
 export default function Education() {
   return (
@@ -78,10 +110,10 @@ export default function Education() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Education & Certifications
+            Education
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            My educational background and professional certifications
+            My educational background and training
           </p>
         </motion.div>
 
@@ -176,7 +208,8 @@ export default function Education() {
           </div>
         </div>
 
-        {/* Certifications */}
+        {/* COMMENTED OUT - Certifications Section */}
+        {/*
         <div>
           <motion.h3
             initial={{ opacity: 0, x: -20 }}
@@ -220,6 +253,7 @@ export default function Education() {
             ))}
           </div>
         </div>
+        */}
       </div>
     </section>
   );

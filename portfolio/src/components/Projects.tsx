@@ -1,3 +1,7 @@
+// COMMENTED OUT - Projects Component
+// Uncomment when ready to add real projects
+
+/*
 "use client";
 
 import { motion } from "framer-motion";
@@ -81,7 +85,6 @@ export default function Projects() {
                 project.featured ? "lg:col-span-1 xl:col-span-1" : ""
               }`}
             >
-              {/* Project Image */}
               <div className="relative h-48 overflow-hidden">
                 <Image
                   src={project.image}
@@ -91,7 +94,6 @@ export default function Projects() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                {/* Action buttons */}
                 <div className="absolute top-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <motion.a
                     whileHover={{ scale: 1.1 }}
@@ -122,7 +124,6 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Project Content */}
               <div className="p-6">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                   {project.title}
@@ -131,7 +132,6 @@ export default function Projects() {
                   {project.description}
                 </p>
 
-                {/* Technologies */}
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.technologies.map((tech) => (
                     <span
@@ -143,7 +143,6 @@ export default function Projects() {
                   ))}
                 </div>
 
-                {/* Project Links */}
                 <div className="flex space-x-4">
                   <a
                     href={project.liveUrl}
@@ -169,7 +168,6 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* View More Projects Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -192,4 +190,10 @@ export default function Projects() {
       </div>
     </section>
   );
+}
+*/
+
+// Temporary placeholder component
+export default function Projects() {
+  return null;
 }
