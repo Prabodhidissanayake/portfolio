@@ -557,10 +557,21 @@ const SnakeGame = () => {
     const isFood = food[0] === row && food[1] === col;
     const isHead = snake[0] && snake[0][0] === row && snake[0][1] === col;
 
+    // Get direction arrow for snake head
+    const getDirectionArrow = () => {
+      if (!isHead) return "";
+      const [dirY, dirX] = direction;
+      if (dirY === -1) return "↑"; // Up
+      if (dirY === 1) return "↓"; // Down
+      if (dirX === -1) return "←"; // Left
+      if (dirX === 1) return "→"; // Right
+      return "→"; // Default right
+    };
+
     gridCells.push(
       <div
         key={i}
-        className={`aspect-square ${
+        className={`aspect-square flex items-center justify-center text-white font-bold ${
           isFood
             ? "bg-red-500"
             : isHead
@@ -569,7 +580,9 @@ const SnakeGame = () => {
             ? "bg-green-400"
             : "bg-gray-100 dark:bg-gray-700"
         }`}
-      />
+      >
+        {isFood ? "🍎" : isHead ? getDirectionArrow() : ""}
+      </div>
     );
   }
 
@@ -634,53 +647,46 @@ type GameId = "memory" | "reaction" | "snake";
 interface GameInfo {
   id: GameId;
   name: string;
+  description: string;
   icon: React.ComponentType<{ size?: number; className?: string }>;
   component: React.ComponentType;
+  color: string;
+  bgGradient: string;
 }
 
 // Main Games Section Component
 export default function Games() {
   const [activeGame, setActiveGame] = useState<GameId>("memory");
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   const allGames: GameInfo[] = [
     {
       id: "memory",
-      name: "Memory Game",
+      name: "Memory",
+      description: "Match pairs of cards",
       icon: Sparkles,
       component: MemoryGame,
+      color: "text-purple-600",
+      bgGradient: "from-purple-500 to-pink-500",
     },
     {
       id: "reaction",
-      name: "Reaction Time",
+      name: "Reaction",
+      description: "Test your reflexes",
       icon: Zap,
       component: ReactionGame,
+      color: "text-yellow-600",
+      bgGradient: "from-yellow-500 to-orange-500",
     },
-    { id: "snake", name: "Snake", icon: Target, component: SnakeGame },
+    {
+      id: "snake",
+      name: "Snake",
+      description: "Classic arcade game",
+      icon: Target,
+      component: SnakeGame,
+      color: "text-green-600",
+      bgGradient: "from-green-500 to-emerald-500",
+    },
   ];
-
-  // Filter out snake game on mobile
-  const games = isMobile
-    ? allGames.filter((game) => game.id !== "snake")
-    : allGames;
-
-  // Reset active game if snake is selected on mobile
-  useEffect(() => {
-    if (isMobile && activeGame === "snake") {
-      setActiveGame("memory");
-    }
-  }, [isMobile, activeGame]);
 
   return (
     <section id="games" className="py-20 px-4 bg-gray-50 dark:bg-gray-900/50">
@@ -702,47 +708,94 @@ export default function Games() {
             Take a break and have some fun!
           </p>
         </motion.div>
-        {/* Game Selection Tabs */}
-        <div className="flex justify-center mb-8">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-2 shadow-lg">
-            {games.map((game) => (
-              <motion.button
-                key={game.id}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setActiveGame(game.id)}
-                className={`flex items-center px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                  activeGame === game.id
-                    ? "bg-blue-500 text-white shadow-md"
-                    : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                }`}
-              >
-                <game.icon size={20} className="mr-2" />
-                {game.name}
-              </motion.button>
-            ))}
-          </div>
-        </div>
-        {/* Active Game */}
-        <div className="max-w-2xl mx-auto">
-          <AnimatePresence mode="wait">
+
+        {/* Game Selection Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {allGames.map((game) => (
             <motion.div
-              key={activeGame}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
+              key={game.id}
+              whileHover={{ scale: 1.02, y: -5 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setActiveGame(game.id)}
+              className={`relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 ${
+                activeGame === game.id
+                  ? "ring-4 ring-blue-500 shadow-2xl"
+                  : "shadow-lg hover:shadow-xl"
+              } ${game.id === "snake" ? "hidden md:block" : ""}`}
             >
-              {(() => {
-                const ActiveGameComponent = games.find(
-                  (game) => game.id === activeGame
-                )?.component;
-                return ActiveGameComponent ? <ActiveGameComponent /> : null;
-              })()}
+              {/* Background Gradient */}
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${game.bgGradient} opacity-10`}
+              />
+
+              {/* Active Game Indicator */}
+              {activeGame === game.id && (
+                <motion.div
+                  layoutId="activeIndicator"
+                  className="absolute top-3 right-3 w-3 h-3 bg-blue-500 rounded-full"
+                  transition={{ type: "spring", bounce: 0.3 }}
+                />
+              )}
+
+              {/* Card Content */}
+              <div className="relative p-6 bg-white dark:bg-gray-800 h-full">
+                <div className="flex items-start justify-between mb-4">
+                  <div
+                    className={`p-3 rounded-xl bg-gradient-to-br ${game.bgGradient} shadow-lg`}
+                  >
+                    <game.icon size={24} className="text-white" />
+                  </div>
+                  {activeGame === game.id && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="flex items-center space-x-1 text-xs font-medium text-blue-600 dark:text-blue-400"
+                    >
+                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+                      <span>ACTIVE</span>
+                    </motion.div>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                    {game.name}
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                    {game.description}
+                  </p>
+                </div>
+
+                {/* Hover Effect */}
+                <motion.div
+                  className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r"
+                  style={{
+                    backgroundImage: `linear-gradient(to right, ${
+                      game.bgGradient.includes("purple")
+                        ? "#8B5CF6, #EC4899"
+                        : game.bgGradient.includes("yellow")
+                        ? "#F59E0B, #F97316"
+                        : "#10B981, #059669"
+                    })`,
+                  }}
+                  initial={{ scaleX: 0 }}
+                  whileHover={{ scaleX: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </div>
             </motion.div>
-          </AnimatePresence>
+          ))}
         </div>
-        F
+
+        {/* Active Game Display */}
+        <div className="max-w-2xl mx-auto">
+          {(() => {
+            const ActiveGameComponent = allGames.find(
+              (game) => game.id === activeGame
+            )?.component;
+            return ActiveGameComponent ? <ActiveGameComponent /> : null;
+          })()}
+        </div>
       </div>
     </section>
   );
