@@ -2,6 +2,12 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Player = dynamic(
+  () => import("@lottiefiles/react-lottie-player").then((mod) => mod.Player),
+  { ssr: false }
+);
 
 const skillCategories = {
   "Frontend Technologies": [
@@ -139,9 +145,19 @@ export default function About() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h3 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-16 text-center">
-            Skills & Technologies
-          </h3>
+          <div className="flex flex-col sm:flex-row items-center justify-center mb-16 gap-4">
+            <h3 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white text-center">
+              Skills & Technologies
+            </h3>
+            <div className="w-[13rem] h-24 lg:w-[200px] lg:h-32">
+              <Player
+                autoplay
+                loop
+                src="/animations/skills-animation.json"
+                style={{ height: "100%", width: "100%" }}
+              />
+            </div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {Object.entries(skillCategories).map(
