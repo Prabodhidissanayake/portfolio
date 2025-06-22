@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Gamepad2,
@@ -562,9 +562,9 @@ const SnakeGame = () => {
       if (!isHead) return "";
       const [dirY, dirX] = direction;
       if (dirY === -1) return "↑"; // Up
-      if (dirY === 1) return "↓";  // Down
+      if (dirY === 1) return "↓"; // Down
       if (dirX === -1) return "←"; // Left
-      if (dirX === 1) return "→";  // Right
+      if (dirX === 1) return "→"; // Right
       return "→"; // Default right
     };
 
@@ -657,6 +657,19 @@ interface GameInfo {
 // Main Games Section Component
 export default function Games() {
   const [activeGame, setActiveGame] = useState<GameId>("memory");
+  const gameDisplayRef = useRef<HTMLDivElement>(null);
+
+  const handleGameSelect = (gameId: GameId) => {
+    setActiveGame(gameId);
+
+    setTimeout(() => {
+      gameDisplayRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "nearest",
+      });
+    }, 100); 
+  };
 
   const allGames: GameInfo[] = [
     {
@@ -711,7 +724,6 @@ export default function Games() {
 
         {/* Desktop: Side-by-side layout, Mobile: Stacked layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
           {/* Mobile: Game Selection Cards (shown at top) */}
           <div className="lg:hidden">
             <div className="grid grid-cols-2 gap-4 mb-8">
@@ -720,7 +732,7 @@ export default function Games() {
                   key={game.id}
                   whileHover={{ scale: 1.02, y: -5 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => setActiveGame(game.id)}
+                  onClick={() => handleGameSelect(game.id)}
                   className={`relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 ${
                     activeGame === game.id
                       ? "ring-4 ring-blue-500 shadow-2xl"
@@ -731,7 +743,7 @@ export default function Games() {
                   <div
                     className={`absolute inset-0 bg-gradient-to-br ${game.bgGradient} opacity-10`}
                   />
-                  
+
                   {/* Active Game Indicator */}
                   {activeGame === game.id && (
                     <motion.div
@@ -793,7 +805,7 @@ export default function Games() {
           </div>
 
           {/* Active Game Display - Left side on desktop, below selection on mobile */}
-          <div className="lg:col-span-8">
+          <div ref={gameDisplayRef} className="lg:col-span-8">
             {(() => {
               const ActiveGameComponent = allGames.find(
                 (game) => game.id === activeGame
@@ -813,7 +825,7 @@ export default function Games() {
                   key={game.id}
                   whileHover={{ scale: 1.02, x: -5 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => setActiveGame(game.id)}
+                  onClick={() => handleGameSelect(game.id)}
                   className={`relative overflow-hidden rounded-xl cursor-pointer transition-all duration-300 ${
                     activeGame === game.id
                       ? "ring-4 ring-blue-500 shadow-xl"
@@ -824,7 +836,7 @@ export default function Games() {
                   <div
                     className={`absolute inset-0 bg-gradient-to-br ${game.bgGradient} opacity-10`}
                   />
-                  
+
                   {/* Active Game Indicator */}
                   {activeGame === game.id && (
                     <motion.div
@@ -842,7 +854,7 @@ export default function Games() {
                       >
                         <game.icon size={20} className="text-white" />
                       </div>
-                      
+
                       <div className="flex-1">
                         <h4 className="font-bold text-gray-900 dark:text-white">
                           {game.name}
@@ -885,7 +897,6 @@ export default function Games() {
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </section>
