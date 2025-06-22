@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Gamepad2,
@@ -657,6 +657,20 @@ interface GameInfo {
 // Main Games Section Component
 export default function Games() {
   const [activeGame, setActiveGame] = useState<GameId>("memory");
+  const gameDisplayRef = useRef<HTMLDivElement>(null);
+
+  const handleGameSelect = (gameId: GameId) => {
+    setActiveGame(gameId);
+
+    // Scroll to game display area with smooth animation
+    setTimeout(() => {
+      gameDisplayRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "nearest",
+      });
+    }, 100); // Small delay to ensure the game has rendered
+  };
 
   const allGames: GameInfo[] = [
     {
@@ -716,7 +730,7 @@ export default function Games() {
               key={game.id}
               whileHover={{ scale: 1.02, y: -5 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => setActiveGame(game.id)}
+              onClick={() => handleGameSelect(game.id)}
               className={`relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 ${
                 activeGame === game.id
                   ? "ring-4 ring-blue-500 shadow-2xl"
@@ -788,7 +802,7 @@ export default function Games() {
         </div>
 
         {/* Active Game Display */}
-        <div className="max-w-2xl mx-auto">
+        <div ref={gameDisplayRef} className="max-w-2xl mx-auto">
           {(() => {
             const ActiveGameComponent = allGames.find(
               (game) => game.id === activeGame
