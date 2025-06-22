@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown, Download, Eye } from "lucide-react";
+import { ArrowUp, Download, Eye } from "lucide-react";
 import { Player } from "@lottiefiles/react-lottie-player";
 
 export default function Hero() {
@@ -11,7 +11,12 @@ export default function Hero() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
-
+  const scrollToHome = () => {
+    const element = document.querySelector("#home");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   const downloadResume = () => {
     const link = document.createElement("a");
     link.href = "/resume.pdf";
@@ -132,12 +137,15 @@ export default function Hero() {
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
           className="cursor-pointer"
-          onClick={scrollToProjects}
+          onClick={scrollToHome}
         >
-          <ArrowDown
-            className="text-gray-400 hover:text-blue-600 transition-colors"
-            size={24}
-          />
+          <div className="flex gap-2">
+            <span>Back To Top</span>
+            <ArrowUp
+              className="text-gray-400 hover:text-blue-600 transition-colors"
+              size={24}
+            />
+          </div>
         </motion.div>
       </motion.div>
     </section>
