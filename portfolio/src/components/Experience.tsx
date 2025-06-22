@@ -1,12 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calendar, MapPin, ExternalLink } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
 
 const experiences = [
   {
     id: 1,
-    company: "SuperYacht Times",
     position: "Frontend Developer",
     location: "Amsterdam, Netherlands",
     duration: "June 2024 - Present",
@@ -27,16 +26,13 @@ const experiences = [
       "SASS",
       "Tailwind CSS",
     ],
-    website: "https://www.superyachttimes.com",
   },
   {
     id: 2,
-    company: "SuperYacht Times",
     position: "Junior Frontend Developer",
     location: "Amsterdam, Netherlands",
     duration: "June 2023 - June 2024",
     description: [
-      "Started my professional journey in frontend development after completing the Salt bootcamp",
       "Learned and applied modern web development practices in a professional environment",
       "Developed skills in React.js and TypeScript while working on real-world projects",
       "Participated in code reviews and gained experience with agile development methodologies",
@@ -51,7 +47,6 @@ const experiences = [
       "Git",
       "Agile",
     ],
-    website: "https://www.superyachttimes.com",
   },
 ];
 
@@ -69,9 +64,6 @@ export default function Experience() {
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Work Experience
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            My professional journey in frontend development
-          </p>
         </motion.div>
 
         <div className="relative">
@@ -98,19 +90,6 @@ export default function Experience() {
                       <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                         {experience.position}
                       </h3>
-                      <div className="flex items-center space-x-4 text-gray-600 dark:text-gray-300">
-                        <a
-                          href={experience.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                        >
-                          <span className="font-semibold text-lg">
-                            {experience.company}
-                          </span>
-                          <ExternalLink size={16} className="ml-1" />
-                        </a>
-                      </div>
                     </div>
 
                     <div className="flex flex-col md:items-end mt-4 md:mt-0 space-y-2">
