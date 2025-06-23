@@ -668,7 +668,7 @@ export default function Games() {
         block: "center",
         inline: "nearest",
       });
-    }, 100); 
+    }, 100);
   };
 
   const allGames: GameInfo[] = [
@@ -780,6 +780,71 @@ export default function Games() {
                       <p className="text-sm text-gray-600 dark:text-gray-300">
                         {game.description}
                       </p>
+
+                      {/* Quick Instructions */}
+                      <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+                        <p className="text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">
+                          How to play:
+                        </p>
+                        <div className="space-y-1 text-xs text-gray-600 dark:text-gray-400">
+                          {game.id === "memory" && (
+                            <>
+                              <p>• Click on cards to flip them over</p>
+                              <p>
+                                • Find matching pairs by remembering card
+                                positions
+                              </p>
+                              <p>• Match all pairs to win the game</p>
+                              <p>
+                                • Try to complete it in as few moves as
+                                possible!
+                              </p>
+                              <p className="text-purple-600 dark:text-purple-400 font-medium mt-1">
+                                💡 Tip: Start by flipping cards in different
+                                areas to learn the layout
+                              </p>
+                            </>
+                          )}
+                          {game.id === "reaction" && (
+                            <>
+                              <p>
+                                • Click &apos;Start Emoji Challenge&apos; to
+                                begin
+                              </p>
+                              <p>• Watch for the target emoji to appear</p>
+                              <p>
+                                • Click the matching emoji as fast as you can
+                              </p>
+                              <p>
+                                • Complete 3 rounds to see your average reaction
+                                time
+                              </p>
+                              <p className="text-yellow-600 dark:text-yellow-400 font-medium mt-1">
+                                ⚡ Tip: Stay focused and don&apos;t click too
+                                early - wait for the target!
+                              </p>
+                            </>
+                          )}
+                          {game.id === "snake" && (
+                            <>
+                              <p>• Click Play button to start the game</p>
+                              <p>
+                                • Use arrow keys (↑↓←→) to control the snake
+                              </p>
+                              <p>
+                                • Eat red apples (🍎) to grow and score points
+                              </p>
+                              <p>
+                                • Don&apos;t hit the walls or your own tail!
+                              </p>
+                              <p className="text-blue-600 dark:text-blue-400 font-medium mt-1">
+                                🐍 Tip: Plan your path ahead and do not trap
+                                yourself in corners
+                              </p>
+                            </>
+                          )}
+                        </div>
+                      </div>
                     </div>
 
                     {/* Hover Effect */}
@@ -806,6 +871,7 @@ export default function Games() {
 
           {/* Active Game Display - Left side on desktop, below selection on mobile */}
           <div ref={gameDisplayRef} className="lg:col-span-8">
+            {/* Game Component */}
             {(() => {
               const ActiveGameComponent = allGames.find(
                 (game) => game.id === activeGame
@@ -862,6 +928,47 @@ export default function Games() {
                         <p className="text-xs text-gray-600 dark:text-gray-300">
                           {game.description}
                         </p>
+
+                        {/* Quick Instructions for Desktop */}
+                        <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-600">
+                          <div className="space-y-1 text-xs text-gray-600 dark:text-gray-400">
+                            {game.id === "memory" && (
+                              <>
+                                <p>• Click cards to flip them</p>
+                                <p>• Find matching pairs</p>
+                                <p>• Match all pairs to win</p>
+                                <p>• Aim for fewer moves</p>
+                                <p className="text-purple-600 dark:text-purple-400 font-medium">
+                                  💡 Spread out initial flips!
+                                </p>
+                              </>
+                            )}
+                            {game.id === "reaction" && (
+                              <>
+                                <p>
+                                  • Click &apos;Start Challenge&apos; to begin
+                                </p>
+                                <p>• Wait for target emoji</p>
+                                <p>• Click matching emoji fast</p>
+                                <p>• Complete 3 rounds</p>
+                                <p className="text-yellow-600 dark:text-yellow-400 font-medium">
+                                  ⚡ Wait for the target!
+                                </p>
+                              </>
+                            )}
+                            {game.id === "snake" && (
+                              <>
+                                <p>• Click Play to start</p>
+                                <p>• Arrow keys (↑↓←→) to move</p>
+                                <p>• Eat apples (🍎) to score</p>
+                                <p>• Avoid walls and tail</p>
+                                <p className="text-blue-600 dark:text-blue-400 font-medium">
+                                  🐍 Plan ahead!
+                                </p>
+                              </>
+                            )}
+                          </div>
+                        </div>
                       </div>
 
                       {activeGame === game.id && (
