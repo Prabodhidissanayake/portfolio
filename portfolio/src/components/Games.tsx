@@ -12,6 +12,12 @@ import {
   Play,
   Pause,
 } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const Player = dynamic(
+  () => import("@lottiefiles/react-lottie-player").then((mod) => mod.Player),
+  { ssr: false }
+);
 
 // Memory Game Component
 const MemoryGame = () => {
@@ -85,40 +91,42 @@ const MemoryGame = () => {
           </motion.button>
         </div>
       </div>
-
-      <div className="grid grid-cols-4 gap-3 mb-4">
-        {cards.map((card, index) => (
-          <motion.div
-            key={index}
-            whileHover={matched.includes(index) ? {} : { scale: 1.05 }}
-            whileTap={matched.includes(index) ? {} : { scale: 0.95 }}
-            animate={
-              matched.includes(index)
-                ? {
-                    scale: 0,
-                    opacity: 0,
-                    rotateY: 180,
-                  }
-                : {
-                    scale: 1,
-                    opacity: 1,
-                    rotateY: 0,
-                  }
-            }
-            transition={{ duration: 0.3 }}
-            className={`aspect-square rounded-lg cursor-pointer flex items-center justify-center text-xl font-bold transition-all duration-300 ${
-              matched.includes(index)
-                ? "invisible" // Hide matched cards
-                : flipped.includes(index)
-                ? "bg-blue-500 text-white transform-gpu"
-                : "bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
-            }`}
-            onClick={() => !matched.includes(index) && handleCardClick(index)}
-          >
-            {!matched.includes(index) && (flipped.includes(index) ? card : "?")}
-          </motion.div>
-        ))}
-      </div>
+      {!gameWon && (
+        <div className="grid grid-cols-4 gap-3 mb-4">
+          {cards.map((card, index) => (
+            <motion.div
+              key={index}
+              whileHover={matched.includes(index) ? {} : { scale: 1.05 }}
+              whileTap={matched.includes(index) ? {} : { scale: 0.95 }}
+              animate={
+                matched.includes(index)
+                  ? {
+                      scale: 0,
+                      opacity: 0,
+                      rotateY: 180,
+                    }
+                  : {
+                      scale: 1,
+                      opacity: 1,
+                      rotateY: 0,
+                    }
+              }
+              transition={{ duration: 0.3 }}
+              className={`aspect-square rounded-lg cursor-pointer flex items-center justify-center text-xl font-bold transition-all duration-300 ${
+                matched.includes(index)
+                  ? "invisible" // Hide matched cards
+                  : flipped.includes(index)
+                  ? "bg-blue-500 text-white transform-gpu"
+                  : "bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
+              }`}
+              onClick={() => !matched.includes(index) && handleCardClick(index)}
+            >
+              {!matched.includes(index) &&
+                (flipped.includes(index) ? card : "?")}
+            </motion.div>
+          ))}
+        </div>
+      )}
 
       <AnimatePresence>
         {gameWon && (
@@ -126,14 +134,24 @@ const MemoryGame = () => {
             initial={{ opacity: 0, y: 20, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.8 }}
-            className="text-center p-4 bg-green-100 dark:bg-green-900/30 rounded-lg"
+            className="text-center p-6 bg-green-100 dark:bg-green-900/30 rounded-lg"
           >
+            {/* Lottie Animation */}
             <motion.div
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 0.5, repeat: 3 }}
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", bounce: 0.5 }}
+              className="w-24 h-24 mx-auto mb-4"
             >
-              <Trophy className="mx-auto text-green-600 mb-2" size={32} />
+              <Player
+                autoplay
+                loop={false}
+                src="/animations/won.json"
+                style={{ height: "100%", width: "100%" }}
+              />
             </motion.div>
+
+            {/* Congratulations Message */}
             <p className="text-green-800 dark:text-green-200 font-semibold">
               🎉 Congratulations! You won in {moves} moves! 🎉
             </p>
@@ -602,7 +620,15 @@ const SnakeGame = () => {
             onClick={gameRunning ? pauseGame : startGame}
             className="p-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
           >
-            {gameRunning ? <Pause size={16} /> : <Play size={16} />}
+            {gameRunning ? (
+              <div className="w-[150px] flex items-center gap-2">
+                <span>Pause</span> <Pause size={16} />
+              </div>
+            ) : (
+              <div className="w-[150px] flex items-center gap-2">
+                <span>Start</span> <Play size={16} />
+              </div>
+            )}
           </motion.button>
         </div>
       </div>
@@ -958,7 +984,7 @@ export default function Games() {
                             )}
                             {game.id === "snake" && (
                               <>
-                                <p>• Click Play to start</p>
+                                <p>• Click &quot;Start&quot; button to start</p>
                                 <p>• Arrow keys (↑↓←→) to move</p>
                                 <p>• Eat apples (🍎) to score</p>
                                 <p>• Avoid walls and tail</p>
