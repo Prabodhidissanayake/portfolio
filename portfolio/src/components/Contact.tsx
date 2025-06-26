@@ -338,7 +338,7 @@ export default function Contact() {
         className="mt-20 pt-8 border-t border-gray-200 dark:border-gray-700 text-center"
       >
         <p className="text-gray-600 dark:text-gray-400">
-          © 2025 Prabodhi Dissanayake. Built with Next.js and Tailwind CSS.
+          © 2025 Prabodhi Dissanayake
         </p>
       </motion.div>
     </section>

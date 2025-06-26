@@ -5,54 +5,16 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Prabodhi Dissanayake - Frontend Developer Portfolio",
-  description:
-    "Creative Frontend Developer focused on building clean and interactive user experiences. Specializing in React, Next.js, and modern web technologies.",
-  keywords: [
-    "frontend developer",
-    "react",
-    "nextjs",
-    "typescript",
-    "web development",
-    "HTML5",
-    "CSS3",
-    "JavaScript",
-    "Redux",
-    "Tailwind",
-    "REST",
-  ],
-  authors: [{ name: "Prabodhi Dissanayake" }],
-  creator: "Prabodhi Dissanayake",
-  openGraph: {
-    title: "Prabodhi Dissanayake - Frontend Developer",
-    description:
-      "Creative Frontend Developer focused on building clean and interactive user experiences.",
-    url: "", //Todo: replace website url after we deploy it
-    siteName: "Prabodhi Dissanayake Portfolio",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Prabodhi Dissanayake - Frontend Developer",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Prabodhi Dissanayake - Frontend Developer",
-    description:
-      "Creative Frontend Developer focused on building clean and interactive user experiences.",
-    images: ["/og-image.jpg"],
-  },
+  title: "Private Site",
+  description: "Private application",
   robots: {
-    index: true,
-    follow: true,
+    index: false,
+    follow: false,
+    nocache: true,
     googleBot: {
-      index: true,
-      follow: true,
+      index: false,
+      follow: false,
+      noimageindex: true,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,

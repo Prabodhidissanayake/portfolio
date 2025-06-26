@@ -299,7 +299,7 @@ const ReactionGame = () => {
       case "finished":
         return "bg-purple-500";
       default:
-        return "bg-gray-200 dark:bg-gray-700";
+        return "bg-purple-400";
     }
   };
 
@@ -621,11 +621,11 @@ const SnakeGame = () => {
             className="p-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
           >
             {gameRunning ? (
-              <div className="w-[150px] flex items-center gap-2">
+              <div className="w-[80px] flex items-center gap-2">
                 <span>Pause</span> <Pause size={16} />
               </div>
             ) : (
-              <div className="w-[150px] flex items-center gap-2">
+              <div className="w-[80px] flex items-center gap-2 justify-center">
                 <span>Start</span> <Play size={16} />
               </div>
             )}
