@@ -8,7 +8,11 @@ const nextConfig = {
         headers: [
           {
             key: "X-Robots-Tag",
-            value: "noindex, nofollow, noarchive, nosnippet",
+            value: "noindex, nofollow, noarchive, nosnippet, noimageindex",
+          },
+          {
+            key: "Cache-Control",
+            value: "no-cache, no-store, must-revalidate",
           },
         ],
       },
