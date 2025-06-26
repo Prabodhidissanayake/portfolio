@@ -33,8 +33,8 @@ export default function Home() {
         <Projects />
         <Experience />
         <Education />
-        <Games />
         <InteractiveJourneyMap />
+        <Games />
         <Contact />
       </main>
     </div>

@@ -333,7 +333,7 @@ export default function InteractiveJourneyMap() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1 }}
           viewport={{ once: false }}
-          className="relative w-full max-w-4xl mx-auto h-[400px] bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-3xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-2xl"
+          className="relative w-full max-w-6xl mx-auto h-[500px] bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-3xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-2xl"
         >
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-10">
@@ -509,7 +509,7 @@ export default function InteractiveJourneyMap() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.2 + 0.3 }}
               >
-                <div className="bg-white dark:bg-gray-800 px-2 py-1 rounded-full shadow-md border border-gray-200 dark:border-gray-600">
+                <div className="bg-white dark:bg-gray-800 px-3 py-2 rounded-full shadow-md border border-gray-200 dark:border-gray-600 min-w-max">
                   <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap">
                     {node.year}
                   </p>
