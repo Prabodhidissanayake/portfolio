@@ -73,7 +73,7 @@ export default function About() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
@@ -90,7 +90,7 @@ export default function About() {
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             className="flex justify-center lg:justify-start"
           >
             <div className="relative">
@@ -113,7 +113,7 @@ export default function About() {
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             className="space-y-8"
           >
             <div className="space-y-6">
@@ -143,7 +143,7 @@ export default function About() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
         >
           <div className="flex flex-col sm:flex-row items-center justify-center mb-16 gap-4">
             <h3 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white text-center">
@@ -167,7 +167,7 @@ export default function About() {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 card-hover border border-gray-100 dark:border-gray-700"
                 >
                   <div className="flex items-center mb-6">
@@ -186,7 +186,7 @@ export default function About() {
                           duration: 0.4,
                           delay: categoryIndex * 0.1 + index * 0.05,
                         }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false }}
                         whileHover={{ scale: 1.08, y: -2 }}
                         className="px-5 py-3 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-800 dark:text-blue-200 rounded-full text-sm font-semibold border border-blue-200 dark:border-blue-700 cursor-default transition-all duration-200 shadow-sm hover:shadow-md"
                       >
