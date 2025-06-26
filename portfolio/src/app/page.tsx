@@ -10,6 +10,7 @@ import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
 import Games from "@/components/Games";
+import InteractiveJourneyMap from "@/components/InteractiveJourneyMap";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -32,7 +33,8 @@ export default function Home() {
         <Projects />
         <Experience />
         <Education />
-        <Games /> 
+        <Games />
+        <InteractiveJourneyMap />
         <Contact />
       </main>
     </div>
