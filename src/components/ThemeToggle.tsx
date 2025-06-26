@@ -7,24 +7,30 @@ import { Sun, Moon, Lightbulb, Zap } from "lucide-react";
 export default function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
   const [showBulbAnimation, setShowBulbAnimation] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     // Check for saved theme preference or default to light mode
-    const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
+    if (typeof window !== "undefined") {
+      const savedTheme = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
 
-    if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
-      setIsDark(true);
-      document.documentElement.classList.add("dark");
-    } else {
-      setIsDark(false);
-      document.documentElement.classList.remove("dark");
+      if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+        setIsDark(true);
+        document.documentElement.classList.add("dark");
+      } else {
+        setIsDark(false);
+        document.documentElement.classList.remove("dark");
+      }
     }
   }, []);
 
   const toggleTheme = () => {
+    if (typeof window === "undefined") return;
+
     // Show the light bulb animation
     setShowBulbAnimation(true);
 
@@ -46,6 +52,13 @@ export default function ThemeToggle() {
       }
     }, 300);
   };
+
+  // Prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <div className="w-14 h-8 rounded-full bg-gray-200 dark:bg-gray-700" />
+    );
+  }
 
   return (
     <>
