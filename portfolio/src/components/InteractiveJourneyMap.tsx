@@ -3,13 +3,13 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
-import { 
-  MapPin, 
-  Star, 
-  Code, 
-  Trophy, 
-  BookOpen, 
-  Briefcase, 
+import {
+  MapPin,
+  Star,
+  Code,
+  Trophy,
+  BookOpen,
+  Briefcase,
   Target,
   Play,
   Pause,
@@ -18,7 +18,7 @@ import {
   Lightbulb,
   Heart,
   Rocket,
-  Brain
+  Brain,
 } from "lucide-react";
 
 const Player = dynamic(
@@ -26,33 +26,49 @@ const Player = dynamic(
   { ssr: false }
 );
 
-// Journey data with achievements
 const journeyData = [
   {
     id: 1,
     year: "2017-2018",
-    title: "English Language Foundation",
+    title: "English Language Diploma",
     institution: "ICBT Campus, Sri Lanka",
     type: "education",
     icon: BookOpen,
     color: "from-emerald-400 to-cyan-500",
-    description: "Built strong communication foundation with European Quality Assurance",
-    achievements: ["ISO 9001 Certification", "English Proficiency", "Communication Skills"],
+    description:
+      "Built strong communication foundation with European Quality Assurance",
+    achievements: [
+      "ISO 9001 Certification",
+      "English Proficiency",
+      "Communication Skills",
+    ],
     position: { x: 15, y: 75 },
-    skills: ["Communication", "Writing", "Critical Thinking"]
+    skills: ["Communication", "Writing", "Critical Thinking"],
   },
   {
     id: 2,
     year: "2019-2022",
-    title: "Software Engineering Degree",
+    title: "1st class Degree in B.Sc (Hons) Software Engineering",
     institution: "University of Plymouth, UK",
     type: "education",
     icon: BookOpen,
     color: "from-blue-400 to-purple-500",
-    description: "Graduated with First Class Honors, mastering computer science fundamentals",
-    achievements: ["First Class Honors", "Java Programming", "Database Management", "Algorithm Design"],
+    description:
+      "Graduated with First Class Honors, mastering computer science fundamentals",
+    achievements: [
+      "First Class Honors",
+      "JavaScript/Java Programming",
+      "Database Management",
+      "Algorithm Design",
+    ],
     position: { x: 30, y: 45 },
-    skills: ["Java", "JavaScript", "Algorithms", "Database Design", "Software Architecture"]
+    skills: [
+      "Java",
+      "JavaScript",
+      "Algorithms",
+      "Database Design",
+      "Software Architecture",
+    ],
   },
   {
     id: 3,
@@ -62,10 +78,15 @@ const journeyData = [
     type: "bootcamp",
     icon: Code,
     color: "from-orange-400 to-red-500",
-    description: "Intensive 3-month program focusing on TDD and mob programming",
-    achievements: ["Test Driven Development", "Mob Programming", "Agile Methodologies"],
+    description:
+      "Intensive 3-month program focusing on TDD and mob programming",
+    achievements: [
+      "Test Driven Development",
+      "Mob Programming",
+      "Agile Methodologies",
+    ],
     position: { x: 50, y: 30 },
-    skills: ["TDD", "Mob Programming", "React", "Node.js", "Agile"]
+    skills: ["TDD", "Mob Programming", "React", "Node.js", "Agile"],
   },
   {
     id: 4,
@@ -75,10 +96,15 @@ const journeyData = [
     type: "work",
     icon: Briefcase,
     color: "from-green-400 to-emerald-500",
-    description: "Started professional journey, learning real-world development practices",
-    achievements: ["React Mastery", "Professional Environment", "Team Collaboration"],
+    description:
+      "Started professional journey, learning real-world development practices",
+    achievements: [
+      "React Mastery",
+      "Professional Environment",
+      "Team Collaboration",
+    ],
     position: { x: 70, y: 45 },
-    skills: ["React.js", "TypeScript", "Git", "Code Review", "Team Work"]
+    skills: ["React.js", "TypeScript", "Git", "Code Review", "Team Work"],
   },
   {
     id: 5,
@@ -88,50 +114,79 @@ const journeyData = [
     type: "work",
     icon: Trophy,
     color: "from-purple-400 to-pink-500",
-    description: "Advanced to Frontend Developer, building innovative web solutions",
-    achievements: ["Technical Leadership", "Architecture Decisions", "Mentoring"],
+    description:
+      "Advanced to Frontend Developer, building innovative web solutions",
+    achievements: [
+      "Technical Leadership",
+      "Architecture Decisions",
+      "Mentoring",
+    ],
     position: { x: 85, y: 25 },
-    skills: ["Next.js", "Advanced React", "Performance Optimization", "Leadership", "Innovation"]
-  }
+    skills: [
+      "Next.js",
+      "Advanced React",
+      "Performance Optimization",
+      "Leadership",
+      "Innovation",
+    ],
+  },
 ];
 
-// Interactive milestones/easter eggs
 const interactiveMilestones = [
-  { x: 22, y: 60, icon: Coffee, message: "☕ Countless cups of coffee fueled this journey!" },
-  { x: 40, y: 38, icon: Lightbulb, message: "💡 That 'aha!' moment when everything clicked" },
-  { x: 60, y: 38, icon: Heart, message: "❤️ Fell in love with clean, maintainable code" },
-  { x: 77, y: 35, icon: Rocket, message: "🚀 Ready to build the future of web!" }
+  {
+    x: 22,
+    y: 60,
+    icon: Coffee,
+    message: "☕ Countless cups of coffee fueled this journey!",
+  },
+  {
+    x: 40,
+    y: 38,
+    icon: Lightbulb,
+    message: "💡 That 'aha!' moment when everything clicked",
+  },
+  {
+    x: 60,
+    y: 38,
+    icon: Heart,
+    message: "❤️ Fell in love with clean, maintainable code",
+  },
+  {
+    x: 77,
+    y: 35,
+    icon: Rocket,
+    message: "🚀 Ready to build the future of web!",
+  },
 ];
 
 export default function InteractiveJourneyMap() {
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
-  const [discoveredMilestones, setDiscoveredMilestones] = useState<number[]>([]);
+  const [discoveredMilestones, setDiscoveredMilestones] = useState<number[]>(
+    []
+  );
   const [activeMilestone, setActiveMilestone] = useState<number | null>(null);
   const mapRef = useRef<HTMLDivElement>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const playerRef = useRef<any>(null);
+  const playerRef = useRef<HTMLDivElement>(null);
 
-  // Auto-play journey
   useEffect(() => {
     if (isPlaying) {
       const interval = setInterval(() => {
-        setCurrentStep(prev => {
+        setCurrentStep((prev) => {
           const nextStep = prev + 1;
           if (nextStep >= journeyData.length) {
             setIsPlaying(false);
             return prev;
           }
-          
-          // Auto-select the next node during auto-play with shorter delay
+
           setTimeout(() => {
             const nextNode = journeyData[nextStep];
             if (nextNode) {
               setSelectedNode(nextNode.id);
             }
-          }, 1000); // Shorter delay: content opens while character is walking
-          
+          }, 1000);
+
           return nextStep;
         });
       }, 3500); // 3.5 seconds between moves
@@ -139,18 +194,24 @@ export default function InteractiveJourneyMap() {
     }
   }, [isPlaying]);
 
-  // Control Lottie animation manually
   useEffect(() => {
     if (playerRef.current) {
       if (isPlaying) {
-        playerRef.current.play();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const player = playerRef.current as any;
+        if (player.play) {
+          player.play();
+        }
       } else {
-        playerRef.current.pause();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const player = playerRef.current as any;
+        if (player.pause) {
+          player.pause();
+        }
       }
     }
   }, [isPlaying]);
 
-  // Initialize auto-play with first node
   useEffect(() => {
     if (isPlaying && currentStep === 0) {
       const firstNode = journeyData[0];
@@ -161,16 +222,14 @@ export default function InteractiveJourneyMap() {
   }, [isPlaying, currentStep]);
 
   const handleNodeClick = (nodeId: number) => {
-    // If auto-play is running, pause it when user clicks a node
     if (isPlaying) {
       setIsPlaying(false);
     }
-    
+
     setSelectedNode(selectedNode === nodeId ? null : nodeId);
   };
 
   const handleMilestoneClick = (index: number) => {
-    // Close previous milestone and open new one
     if (activeMilestone === index) {
       setActiveMilestone(null);
     } else {
@@ -192,11 +251,13 @@ export default function InteractiveJourneyMap() {
   const startAutoPlay = () => {
     setCurrentStep(0);
     setIsPlaying(true);
-    // Don't clear selected node - let auto-play enhance the experience
   };
 
   return (
-    <section id="journey" className="py-20 px-4 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <section
+      id="journey"
+      className="py-20 px-4 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900"
+    >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -213,7 +274,8 @@ export default function InteractiveJourneyMap() {
             </h2>
           </div>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-            Explore my path from student to developer. Click on nodes to discover achievements, or watch the animated journey!
+            Explore my path from student to developer. Click on nodes to
+            discover achievements, or watch the animated journey!
           </p>
 
           {/* Interactive Controls */}
@@ -236,7 +298,6 @@ export default function InteractiveJourneyMap() {
                 if (isPlaying) {
                   setIsPlaying(false);
                 } else {
-                  // Resume from current position or start from beginning
                   setIsPlaying(true);
                 }
               }}
@@ -275,29 +336,59 @@ export default function InteractiveJourneyMap() {
         >
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `radial-gradient(circle at 25px 25px, rgba(59, 130, 246, 0.3) 2px, transparent 0)`,
-              backgroundSize: '50px 50px'
-            }} />
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `radial-gradient(circle at 25px 25px, rgba(59, 130, 246, 0.3) 2px, transparent 0)`,
+                backgroundSize: "50px 50px",
+              }}
+            />
           </div>
 
           {/* Journey Path */}
           <svg className="absolute inset-0 w-full h-full">
             <defs>
-              <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgb(59, 130, 246)" stopOpacity="0.3" />
-                <stop offset="50%" stopColor="rgb(147, 51, 234)" stopOpacity="0.5" />
-                <stop offset="100%" stopColor="rgb(236, 72, 153)" stopOpacity="0.7" />
+              <linearGradient
+                id="pathGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="0%"
+              >
+                <stop
+                  offset="0%"
+                  stopColor="rgb(59, 130, 246)"
+                  stopOpacity="0.3"
+                />
+                <stop
+                  offset="50%"
+                  stopColor="rgb(147, 51, 234)"
+                  stopOpacity="0.5"
+                />
+                <stop
+                  offset="100%"
+                  stopColor="rgb(236, 72, 153)"
+                  stopOpacity="0.7"
+                />
               </linearGradient>
             </defs>
             <motion.path
-              d={`M ${journeyData[0].position.x}% ${journeyData[0].position.y}% ${journeyData.slice(1).map(node => `L ${node.position.x}% ${node.position.y}%`).join(' ')}`}
+              d={`M ${journeyData[0].position.x}% ${
+                journeyData[0].position.y
+              }% ${journeyData
+                .slice(1)
+                .map((node) => `L ${node.position.x}% ${node.position.y}%`)
+                .join(" ")}`}
               stroke="url(#pathGradient)"
               strokeWidth="4"
               fill="none"
               strokeDasharray="10,5"
               initial={{ pathLength: 0 }}
-              animate={{ pathLength: isPlaying ? (currentStep + 1) / journeyData.length : 1 }}
+              animate={{
+                pathLength: isPlaying
+                  ? (currentStep + 1) / journeyData.length
+                  : 1,
+              }}
               transition={{ duration: 0.5 }}
             />
           </svg>
@@ -305,45 +396,57 @@ export default function InteractiveJourneyMap() {
           {/* Walking Character with Lottie Animation */}
           <motion.div
             className="absolute z-20 pointer-events-none"
-            animate={isPlaying ? {
-              left: journeyData.map(node => `${node.position.x}%`),
-              top: journeyData.map(node => `${node.position.y}%`)
-            } : {
-              left: `${journeyData[Math.min(currentStep, journeyData.length - 1)].position.x}%`,
-              top: `${journeyData[Math.min(currentStep, journeyData.length - 1)].position.y}%`
-            }}
+            animate={
+              isPlaying
+                ? {
+                    left: journeyData.map((node) => `${node.position.x}%`),
+                    top: journeyData.map((node) => `${node.position.y}%`),
+                  }
+                : {
+                    left: `${
+                      journeyData[Math.min(currentStep, journeyData.length - 1)]
+                        .position.x
+                    }%`,
+                    top: `${
+                      journeyData[Math.min(currentStep, journeyData.length - 1)]
+                        .position.y
+                    }%`,
+                  }
+            }
             transition={{
               duration: isPlaying ? (journeyData.length - 1) * 3.5 : 0, // Slower movement: 3.5 seconds per step
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
             style={{
-              transform: 'translate(-50%, -50%)'
+              transform: "translate(-50%, -50%)",
             }}
           >
             <motion.div
               className="relative w-16 h-16"
-              animate={isPlaying ? {
-                scale: [1, 1.05, 1],
-              } : {}}
+              animate={
+                isPlaying
+                  ? {
+                      scale: [1, 1.05, 1],
+                    }
+                  : {}
+              }
               transition={{
                 duration: 1,
                 repeat: isPlaying ? Infinity : 0,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             >
               {/* Lottie Walking Animation */}
-              <div className="w-full h-full">
+              <div className="w-full h-full" ref={playerRef}>
                 <Player
-                  ref={playerRef}
                   autoplay={isPlaying}
                   loop={isPlaying}
                   src="/animations/walking-character.json"
                   style={{ height: "100%", width: "100%" }}
-                  key={isPlaying ? 'playing' : 'stopped'} // Force re-render when state changes
+                  key={isPlaying ? "playing" : "stopped"}
                 />
               </div>
 
-              {/* Optional: Backup character if Lottie fails to load */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full opacity-0 flex items-center justify-center">
                 🚶‍♂️
               </div>
@@ -355,11 +458,14 @@ export default function InteractiveJourneyMap() {
             <motion.div
               key={node.id}
               className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-              style={{ left: `${node.position.x}%`, top: `${node.position.y}%` }}
+              style={{
+                left: `${node.position.x}%`,
+                top: `${node.position.y}%`,
+              }}
               initial={{ scale: 0, opacity: 0 }}
-              animate={{ 
+              animate={{
                 scale: isPlaying ? (index <= currentStep ? 1 : 0.3) : 1,
-                opacity: isPlaying ? (index <= currentStep ? 1 : 0.5) : 1
+                opacity: isPlaying ? (index <= currentStep ? 1 : 0.5) : 1,
               }}
               transition={{ delay: index * 0.2, duration: 0.5 }}
               whileHover={{ scale: 1.1 }}
@@ -369,20 +475,27 @@ export default function InteractiveJourneyMap() {
               {/* Node Glow Effect */}
               <motion.div
                 className={`absolute inset-0 rounded-full blur-lg bg-gradient-to-r ${node.color}`}
-                animate={{ 
+                animate={{
                   scale: selectedNode === node.id ? [1, 1.2, 1] : 1,
-                  opacity: selectedNode === node.id ? [0.3, 0.6, 0.3] : 0.2
+                  opacity: selectedNode === node.id ? [0.3, 0.6, 0.3] : 0.2,
                 }}
-                transition={{ duration: 2, repeat: selectedNode === node.id ? Infinity : 0 }}
+                transition={{
+                  duration: 2,
+                  repeat: selectedNode === node.id ? Infinity : 0,
+                }}
               />
 
               {/* Main Node */}
               <motion.div
                 className={`relative w-12 h-12 rounded-full bg-gradient-to-r ${node.color} shadow-lg border-3 border-white dark:border-gray-800 flex items-center justify-center`}
-                animate={selectedNode === node.id ? { 
-                  rotate: [0, 5, -5, 0],
-                  scale: [1, 1.05, 1]
-                } : {}}
+                animate={
+                  selectedNode === node.id
+                    ? {
+                        rotate: [0, 5, -5, 0],
+                        scale: [1, 1.05, 1],
+                      }
+                    : {}
+                }
                 transition={{ duration: 0.5 }}
               >
                 <node.icon className="text-white" size={18} />
@@ -428,12 +541,18 @@ export default function InteractiveJourneyMap() {
             >
               <motion.div
                 className={`w-6 h-6 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 shadow-md flex items-center justify-center ${
-                  discoveredMilestones.includes(index) ? 'ring-2 ring-yellow-300' : ''
+                  discoveredMilestones.includes(index)
+                    ? "ring-2 ring-yellow-300"
+                    : ""
                 }`}
-                animate={discoveredMilestones.includes(index) ? {
-                  scale: [1, 1.3, 1],
-                  rotate: [0, 180, 360]
-                } : {}}
+                animate={
+                  discoveredMilestones.includes(index)
+                    ? {
+                        scale: [1, 1.3, 1],
+                        rotate: [0, 180, 360],
+                      }
+                    : {}
+                }
                 transition={{ duration: 0.5 }}
               >
                 <milestone.icon className="text-white" size={12} />
@@ -468,13 +587,15 @@ export default function InteractiveJourneyMap() {
               className="mt-12 max-w-4xl mx-auto"
             >
               {(() => {
-                const node = journeyData.find(n => n.id === selectedNode);
+                const node = journeyData.find((n) => n.id === selectedNode);
                 if (!node) return null;
 
                 return (
                   <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
                     {/* Header */}
-                    <div className={`bg-gradient-to-r ${node.color} p-6 text-white`}>
+                    <div
+                      className={`bg-gradient-to-r ${node.color} p-6 text-white`}
+                    >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
                           <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4">
@@ -507,7 +628,10 @@ export default function InteractiveJourneyMap() {
                         {/* Achievements */}
                         <div>
                           <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
-                            <Trophy className="mr-2 text-yellow-500" size={20} />
+                            <Trophy
+                              className="mr-2 text-yellow-500"
+                              size={20}
+                            />
                             Key Achievements
                           </h4>
                           <div className="space-y-2">
@@ -520,7 +644,9 @@ export default function InteractiveJourneyMap() {
                                 className="flex items-center"
                               >
                                 <Star className="w-4 h-4 text-yellow-500 mr-2 flex-shrink-0" />
-                                <span className="text-gray-700 dark:text-gray-300">{achievement}</span>
+                                <span className="text-gray-700 dark:text-gray-300">
+                                  {achievement}
+                                </span>
                               </motion.div>
                             ))}
                           </div>
