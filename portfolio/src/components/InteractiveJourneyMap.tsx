@@ -104,7 +104,7 @@ const journeyData = [
       "Team Collaboration",
     ],
     position: { x: 70, y: 45 },
-    skills: ["React.js", "TypeScript", "Git", "Code Review", "Team Work"],
+    skills: ["React.js", "TypeScript", "Storybook", "Code Review", "Team Work"],
   },
   {
     id: 5,
@@ -124,6 +124,7 @@ const journeyData = [
     position: { x: 85, y: 25 },
     skills: [
       "Next.js",
+      "Tailwind css",
       "Advanced React",
       "Performance Optimization",
       "Leadership",
@@ -255,7 +256,7 @@ export default function InteractiveJourneyMap() {
 
   return (
     <section
-      id="journey"
+      id="developerJourney"
       className="py-20 px-4 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900"
     >
       <div className="max-w-7xl mx-auto">
