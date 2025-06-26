@@ -1,12 +1,11 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Prabodhi Dissanayake",
-  description: "Private application",
+export const metadata = {
+  title: "Prabodhi Dissanayake - Portfolio",
+  description: "Frontend Developer Portfolio",
   robots: {
     index: false,
     follow: false,
@@ -15,9 +14,6 @@ export const metadata: Metadata = {
       index: false,
       follow: false,
       noimageindex: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
     },
   },
 };
