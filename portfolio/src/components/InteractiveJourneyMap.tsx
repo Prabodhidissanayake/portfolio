@@ -2,42 +2,44 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  MapPin,
-  Star,
-  Code,
-  Trophy,
-  BookOpen,
-  Briefcase,
+import dynamic from "next/dynamic";
+import { 
+  MapPin, 
+  Star, 
+  Code, 
+  Trophy, 
+  BookOpen, 
+  Briefcase, 
   Target,
   Play,
   Pause,
   RotateCcw,
-  Rocket,
-  Brain,
-  Heart,
   Coffee,
   Lightbulb,
+  Heart,
+  Rocket,
+  Brain
 } from "lucide-react";
 
+const Player = dynamic(
+  () => import("@lottiefiles/react-lottie-player").then((mod) => mod.Player),
+  { ssr: false }
+);
+
+// Journey data with achievements
 const journeyData = [
   {
     id: 1,
     year: "2017-2018",
-    title: "English Language Diploma",
+    title: "English Language Foundation",
     institution: "ICBT Campus, Sri Lanka",
     type: "education",
     icon: BookOpen,
     color: "from-emerald-400 to-cyan-500",
-    description:
-      "Built strong communication foundation with European Quality Assurance",
-    achievements: [
-      "ISO 9001 Certification",
-      "English Proficiency",
-      "Communication Skills",
-    ],
+    description: "Built strong communication foundation with European Quality Assurance",
+    achievements: ["ISO 9001 Certification", "English Proficiency", "Communication Skills"],
     position: { x: 15, y: 75 },
-    skills: ["Communication", "Writing", "Critical Thinking"],
+    skills: ["Communication", "Writing", "Critical Thinking"]
   },
   {
     id: 2,
@@ -47,22 +49,10 @@ const journeyData = [
     type: "education",
     icon: BookOpen,
     color: "from-blue-400 to-purple-500",
-    description:
-      "Graduated with First Class Honors, mastering computer science fundamentals",
-    achievements: [
-      "First Class Honors",
-      "Java Programming",
-      "Database Management",
-      "Algorithm Design",
-    ],
+    description: "Graduated with First Class Honors, mastering computer science fundamentals",
+    achievements: ["First Class Honors", "Java Programming", "Database Management", "Algorithm Design"],
     position: { x: 30, y: 45 },
-    skills: [
-      "Java",
-      "JavaScript",
-      "Algorithms",
-      "Database Design",
-      "Software Architecture",
-    ],
+    skills: ["Java", "JavaScript", "Algorithms", "Database Design", "Software Architecture"]
   },
   {
     id: 3,
@@ -72,15 +62,10 @@ const journeyData = [
     type: "bootcamp",
     icon: Code,
     color: "from-orange-400 to-red-500",
-    description:
-      "Intensive 3-month program focusing on TDD and mob programming",
-    achievements: [
-      "Test Driven Development",
-      "Mob Programming",
-      "Agile Methodologies",
-    ],
+    description: "Intensive 3-month program focusing on TDD and mob programming",
+    achievements: ["Test Driven Development", "Mob Programming", "Agile Methodologies"],
     position: { x: 50, y: 30 },
-    skills: ["TDD", "Mob Programming", "React", "Node.js", "Agile"],
+    skills: ["TDD", "Mob Programming", "React", "Node.js", "Agile"]
   },
   {
     id: 4,
@@ -90,15 +75,10 @@ const journeyData = [
     type: "work",
     icon: Briefcase,
     color: "from-green-400 to-emerald-500",
-    description:
-      "Started professional journey, learning real-world development practices",
-    achievements: [
-      "React Mastery",
-      "Professional Environment",
-      "Team Collaboration",
-    ],
+    description: "Started professional journey, learning real-world development practices",
+    achievements: ["React Mastery", "Professional Environment", "Team Collaboration"],
     position: { x: 70, y: 45 },
-    skills: ["React.js", "TypeScript", "Git", "Code Review", "Team Work"],
+    skills: ["React.js", "TypeScript", "Git", "Code Review", "Team Work"]
   },
   {
     id: 5,
@@ -108,83 +88,65 @@ const journeyData = [
     type: "work",
     icon: Trophy,
     color: "from-purple-400 to-pink-500",
-    description:
-      "Advanced to Frontend Developer, building innovative web solutions",
-    achievements: [
-      "Technical Leadership",
-      "Architecture Decisions",
-      "Mentoring",
-    ],
+    description: "Advanced to Frontend Developer, building innovative web solutions",
+    achievements: ["Technical Leadership", "Architecture Decisions", "Mentoring"],
     position: { x: 85, y: 25 },
-    skills: [
-      "Next.js",
-      "Advanced React",
-      "Performance Optimization",
-      "Leadership",
-      "Innovation",
-    ],
-  },
+    skills: ["Next.js", "Advanced React", "Performance Optimization", "Leadership", "Innovation"]
+  }
 ];
 
+// Interactive milestones/easter eggs
 const interactiveMilestones = [
-  {
-    x: 22,
-    y: 60,
-    icon: Coffee,
-    message: "☕ Countless cups of coffee fueled this journey!",
-  },
-  {
-    x: 40,
-    y: 38,
-    icon: Lightbulb,
-    message: "💡 That 'aha!' moment when everything clicked",
-  },
-  {
-    x: 60,
-    y: 38,
-    icon: Heart,
-    message: "❤️ Fell in love with clean, maintainable code",
-  },
-  {
-    x: 77,
-    y: 35,
-    icon: Rocket,
-    message: "🚀 Ready to build the future of web!",
-  },
+  { x: 22, y: 60, icon: Coffee, message: "☕ Countless cups of coffee fueled this journey!" },
+  { x: 40, y: 38, icon: Lightbulb, message: "💡 That 'aha!' moment when everything clicked" },
+  { x: 60, y: 38, icon: Heart, message: "❤️ Fell in love with clean, maintainable code" },
+  { x: 77, y: 35, icon: Rocket, message: "🚀 Ready to build the future of web!" }
 ];
 
 export default function InteractiveJourneyMap() {
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
-  const [discoveredMilestones, setDiscoveredMilestones] = useState<number[]>(
-    []
-  );
-  const [showCelebration, setShowCelebration] = useState(false);
+  const [discoveredMilestones, setDiscoveredMilestones] = useState<number[]>([]);
+  const [activeMilestone, setActiveMilestone] = useState<number | null>(null);
   const mapRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const playerRef = useRef<any>(null);
 
+  // Auto-play journey
   useEffect(() => {
     if (isPlaying) {
       const interval = setInterval(() => {
-        setCurrentStep((prev) => {
+        setCurrentStep(prev => {
           const nextStep = prev + 1;
           if (nextStep >= journeyData.length) {
             setIsPlaying(false);
-            setShowCelebration(true);
-            setTimeout(() => setShowCelebration(false), 3000);
             return prev;
           }
-
-          // Auto-select the next node during auto-play
-          const nextNode = journeyData[nextStep];
-          if (nextNode) {
-            setSelectedNode(nextNode.id);
-          }
-
+          
+          // Auto-select the next node during auto-play with shorter delay
+          setTimeout(() => {
+            const nextNode = journeyData[nextStep];
+            if (nextNode) {
+              setSelectedNode(nextNode.id);
+            }
+          }, 1000); // Shorter delay: content opens while character is walking
+          
           return nextStep;
         });
-      }, 2000);
+      }, 3500); // 3.5 seconds between moves
       return () => clearInterval(interval);
+    }
+  }, [isPlaying]);
+
+  // Control Lottie animation manually
+  useEffect(() => {
+    if (playerRef.current) {
+      if (isPlaying) {
+        playerRef.current.play();
+      } else {
+        playerRef.current.pause();
+      }
     }
   }, [isPlaying]);
 
@@ -203,13 +165,19 @@ export default function InteractiveJourneyMap() {
     if (isPlaying) {
       setIsPlaying(false);
     }
-
+    
     setSelectedNode(selectedNode === nodeId ? null : nodeId);
   };
 
   const handleMilestoneClick = (index: number) => {
-    if (!discoveredMilestones.includes(index)) {
-      setDiscoveredMilestones([...discoveredMilestones, index]);
+    // Close previous milestone and open new one
+    if (activeMilestone === index) {
+      setActiveMilestone(null);
+    } else {
+      setActiveMilestone(index);
+      if (!discoveredMilestones.includes(index)) {
+        setDiscoveredMilestones([...discoveredMilestones, index]);
+      }
     }
   };
 
@@ -218,6 +186,7 @@ export default function InteractiveJourneyMap() {
     setSelectedNode(null);
     setIsPlaying(false);
     setDiscoveredMilestones([]);
+    setActiveMilestone(null);
   };
 
   const startAutoPlay = () => {
@@ -227,10 +196,7 @@ export default function InteractiveJourneyMap() {
   };
 
   return (
-    <section
-      id="journey"
-      className="py-20 px-4 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900"
-    >
+    <section id="journey" className="py-20 px-4 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -247,8 +213,7 @@ export default function InteractiveJourneyMap() {
             </h2>
           </div>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-            Explore my path from student to developer. Click on nodes to
-            discover achievements, or watch the animated journey!
+            Explore my path from student to developer. Click on nodes to discover achievements, or watch the animated journey!
           </p>
 
           {/* Interactive Controls */}
@@ -310,213 +275,78 @@ export default function InteractiveJourneyMap() {
         >
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-10">
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `radial-gradient(circle at 25px 25px, rgba(59, 130, 246, 0.3) 2px, transparent 0)`,
-                backgroundSize: "50px 50px",
-              }}
-            />
+            <div className="absolute inset-0" style={{
+              backgroundImage: `radial-gradient(circle at 25px 25px, rgba(59, 130, 246, 0.3) 2px, transparent 0)`,
+              backgroundSize: '50px 50px'
+            }} />
           </div>
 
           {/* Journey Path */}
           <svg className="absolute inset-0 w-full h-full">
             <defs>
-              <linearGradient
-                id="pathGradient"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="0%"
-              >
-                <stop
-                  offset="0%"
-                  stopColor="rgb(59, 130, 246)"
-                  stopOpacity="0.3"
-                />
-                <stop
-                  offset="50%"
-                  stopColor="rgb(147, 51, 234)"
-                  stopOpacity="0.5"
-                />
-                <stop
-                  offset="100%"
-                  stopColor="rgb(236, 72, 153)"
-                  stopOpacity="0.7"
-                />
+              <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="rgb(59, 130, 246)" stopOpacity="0.3" />
+                <stop offset="50%" stopColor="rgb(147, 51, 234)" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="rgb(236, 72, 153)" stopOpacity="0.7" />
               </linearGradient>
             </defs>
             <motion.path
-              d={`M ${journeyData[0].position.x}% ${
-                journeyData[0].position.y
-              }% ${journeyData
-                .slice(1)
-                .map((node) => `L ${node.position.x}% ${node.position.y}%`)
-                .join(" ")}`}
+              d={`M ${journeyData[0].position.x}% ${journeyData[0].position.y}% ${journeyData.slice(1).map(node => `L ${node.position.x}% ${node.position.y}%`).join(' ')}`}
               stroke="url(#pathGradient)"
               strokeWidth="4"
               fill="none"
               strokeDasharray="10,5"
               initial={{ pathLength: 0 }}
-              animate={{
-                pathLength: isPlaying
-                  ? (currentStep + 1) / journeyData.length
-                  : 1,
-              }}
+              animate={{ pathLength: isPlaying ? (currentStep + 1) / journeyData.length : 1 }}
               transition={{ duration: 0.5 }}
             />
           </svg>
 
-          {/* Walking Character */}
+          {/* Walking Character with Lottie Animation */}
           <motion.div
-            className="absolute z-20"
-            animate={
-              isPlaying
-                ? {
-                    left: journeyData.map((node) => `${node.position.x}%`),
-                    top: journeyData.map((node) => `${node.position.y}%`),
-                  }
-                : {
-                    left: `${
-                      journeyData[Math.min(currentStep, journeyData.length - 1)]
-                        .position.x
-                    }%`,
-                    top: `${
-                      journeyData[Math.min(currentStep, journeyData.length - 1)]
-                        .position.y
-                    }%`,
-                  }
-            }
+            className="absolute z-20 pointer-events-none"
+            animate={isPlaying ? {
+              left: journeyData.map(node => `${node.position.x}%`),
+              top: journeyData.map(node => `${node.position.y}%`)
+            } : {
+              left: `${journeyData[Math.min(currentStep, journeyData.length - 1)].position.x}%`,
+              top: `${journeyData[Math.min(currentStep, journeyData.length - 1)].position.y}%`
+            }}
             transition={{
-              duration: isPlaying ? (journeyData.length - 1) * 2 : 0,
-              ease: "easeInOut",
+              duration: isPlaying ? (journeyData.length - 1) * 3.5 : 0, // Slower movement: 3.5 seconds per step
+              ease: "easeInOut"
             }}
             style={{
-              transform: "translate(-50%, -50%)",
+              transform: 'translate(-50%, -50%)'
             }}
           >
             <motion.div
-              className="relative"
-              animate={
-                isPlaying
-                  ? {
-                      scale: [1, 1.1, 1],
-                    }
-                  : {}
-              }
+              className="relative w-16 h-16"
+              animate={isPlaying ? {
+                scale: [1, 1.05, 1],
+              } : {}}
               transition={{
-                duration: 0.6,
+                duration: 1,
                 repeat: isPlaying ? Infinity : 0,
-                ease: "easeInOut",
+                ease: "easeInOut"
               }}
             >
-              {/* Walking Person */}
-              <motion.div
-                className="w-10 h-10 bg-gradient-to-br from-red-500 to-pink-600 rounded-full border-2 border-white shadow-xl relative"
-                animate={
-                  isPlaying
-                    ? {
-                        rotate: [0, 5, -5, 0],
-                      }
-                    : {}
-                }
-                transition={{
-                  duration: 0.4,
-                  repeat: isPlaying ? Infinity : 0,
-                  ease: "easeInOut",
-                }}
-              >
-                {/* Simple face */}
-                <div className="absolute top-2 left-2 w-1.5 h-1.5 bg-white rounded-full"></div>
-                <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-white rounded-full"></div>
-                <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-3 h-1 bg-white rounded-full"></div>
-              </motion.div>
+              {/* Lottie Walking Animation */}
+              <div className="w-full h-full">
+                <Player
+                  ref={playerRef}
+                  autoplay={isPlaying}
+                  loop={isPlaying}
+                  src="/animations/walking-character.json"
+                  style={{ height: "100%", width: "100%" }}
+                  key={isPlaying ? 'playing' : 'stopped'} // Force re-render when state changes
+                />
+              </div>
 
-              {/* Walking legs */}
-              <motion.div
-                className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1"
-                animate={
-                  isPlaying
-                    ? {
-                        scaleY: [1, 1.3, 1],
-                        x: [-2, 0, 2, 0],
-                      }
-                    : {}
-                }
-                transition={{
-                  duration: 0.3,
-                  repeat: isPlaying ? Infinity : 0,
-                  ease: "easeInOut",
-                }}
-              >
-                <div className="w-1 h-4 bg-red-500 rounded-full"></div>
-                <div className="w-1 h-4 bg-red-500 rounded-full"></div>
-              </motion.div>
-
-              {/* Arms */}
-              <motion.div
-                className="absolute top-3 -left-1 w-3 h-1 bg-red-500 rounded-full origin-right"
-                animate={
-                  isPlaying
-                    ? {
-                        rotate: [0, 20, -20, 0],
-                      }
-                    : {}
-                }
-                transition={{
-                  duration: 0.4,
-                  repeat: isPlaying ? Infinity : 0,
-                  ease: "easeInOut",
-                }}
-              />
-              <motion.div
-                className="absolute top-3 -right-1 w-3 h-1 bg-red-500 rounded-full origin-left"
-                animate={
-                  isPlaying
-                    ? {
-                        rotate: [0, -20, 20, 0],
-                      }
-                    : {}
-                }
-                transition={{
-                  duration: 0.4,
-                  repeat: isPlaying ? Infinity : 0,
-                  ease: "easeInOut",
-                  delay: 0.2,
-                }}
-              />
-
-              {/* Footsteps trail */}
-              {isPlaying && (
-                <motion.div
-                  className="absolute top-12 left-1/2 transform -translate-x-1/2"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: [0, 1, 0] }}
-                  transition={{
-                    duration: 1,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <div className="flex space-x-2">
-                    <div className="w-1.5 h-1.5 bg-red-400/50 rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-red-400/50 rounded-full"></div>
-                  </div>
-                </motion.div>
-              )}
-
-              {/* Character bubble when stopped */}
-              {!isPlaying && selectedNode && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.8, y: 10 }}
-                  className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 px-3 py-2 rounded-lg shadow-lg border text-xs font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap"
-                >
-                  Exploring! 🎯
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white dark:border-t-gray-800"></div>
-                </motion.div>
-              )}
+              {/* Optional: Backup character if Lottie fails to load */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full opacity-0 flex items-center justify-center">
+                🚶‍♂️
+              </div>
             </motion.div>
           </motion.div>
 
@@ -525,14 +355,11 @@ export default function InteractiveJourneyMap() {
             <motion.div
               key={node.id}
               className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-              style={{
-                left: `${node.position.x}%`,
-                top: `${node.position.y}%`,
-              }}
+              style={{ left: `${node.position.x}%`, top: `${node.position.y}%` }}
               initial={{ scale: 0, opacity: 0 }}
-              animate={{
+              animate={{ 
                 scale: isPlaying ? (index <= currentStep ? 1 : 0.3) : 1,
-                opacity: isPlaying ? (index <= currentStep ? 1 : 0.5) : 1,
+                opacity: isPlaying ? (index <= currentStep ? 1 : 0.5) : 1
               }}
               transition={{ delay: index * 0.2, duration: 0.5 }}
               whileHover={{ scale: 1.1 }}
@@ -542,27 +369,20 @@ export default function InteractiveJourneyMap() {
               {/* Node Glow Effect */}
               <motion.div
                 className={`absolute inset-0 rounded-full blur-lg bg-gradient-to-r ${node.color}`}
-                animate={{
+                animate={{ 
                   scale: selectedNode === node.id ? [1, 1.2, 1] : 1,
-                  opacity: selectedNode === node.id ? [0.3, 0.6, 0.3] : 0.2,
+                  opacity: selectedNode === node.id ? [0.3, 0.6, 0.3] : 0.2
                 }}
-                transition={{
-                  duration: 2,
-                  repeat: selectedNode === node.id ? Infinity : 0,
-                }}
+                transition={{ duration: 2, repeat: selectedNode === node.id ? Infinity : 0 }}
               />
 
               {/* Main Node */}
               <motion.div
                 className={`relative w-12 h-12 rounded-full bg-gradient-to-r ${node.color} shadow-lg border-3 border-white dark:border-gray-800 flex items-center justify-center`}
-                animate={
-                  selectedNode === node.id
-                    ? {
-                        rotate: [0, 5, -5, 0],
-                        scale: [1, 1.05, 1],
-                      }
-                    : {}
-                }
+                animate={selectedNode === node.id ? { 
+                  rotate: [0, 5, -5, 0],
+                  scale: [1, 1.05, 1]
+                } : {}}
                 transition={{ duration: 0.5 }}
               >
                 <node.icon className="text-white" size={18} />
@@ -608,18 +428,12 @@ export default function InteractiveJourneyMap() {
             >
               <motion.div
                 className={`w-6 h-6 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 shadow-md flex items-center justify-center ${
-                  discoveredMilestones.includes(index)
-                    ? "ring-2 ring-yellow-300"
-                    : ""
+                  discoveredMilestones.includes(index) ? 'ring-2 ring-yellow-300' : ''
                 }`}
-                animate={
-                  discoveredMilestones.includes(index)
-                    ? {
-                        scale: [1, 1.3, 1],
-                        rotate: [0, 180, 360],
-                      }
-                    : {}
-                }
+                animate={discoveredMilestones.includes(index) ? {
+                  scale: [1, 1.3, 1],
+                  rotate: [0, 180, 360]
+                } : {}}
                 transition={{ duration: 0.5 }}
               >
                 <milestone.icon className="text-white" size={12} />
@@ -627,7 +441,7 @@ export default function InteractiveJourneyMap() {
 
               {/* Milestone Tooltip */}
               <AnimatePresence>
-                {discoveredMilestones.includes(index) && (
+                {activeMilestone === index && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8, y: 10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -654,15 +468,13 @@ export default function InteractiveJourneyMap() {
               className="mt-12 max-w-4xl mx-auto"
             >
               {(() => {
-                const node = journeyData.find((n) => n.id === selectedNode);
+                const node = journeyData.find(n => n.id === selectedNode);
                 if (!node) return null;
 
                 return (
                   <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
                     {/* Header */}
-                    <div
-                      className={`bg-gradient-to-r ${node.color} p-6 text-white`}
-                    >
+                    <div className={`bg-gradient-to-r ${node.color} p-6 text-white`}>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
                           <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4">
@@ -695,10 +507,7 @@ export default function InteractiveJourneyMap() {
                         {/* Achievements */}
                         <div>
                           <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
-                            <Trophy
-                              className="mr-2 text-yellow-500"
-                              size={20}
-                            />
+                            <Trophy className="mr-2 text-yellow-500" size={20} />
                             Key Achievements
                           </h4>
                           <div className="space-y-2">
@@ -711,9 +520,7 @@ export default function InteractiveJourneyMap() {
                                 className="flex items-center"
                               >
                                 <Star className="w-4 h-4 text-yellow-500 mr-2 flex-shrink-0" />
-                                <span className="text-gray-700 dark:text-gray-300">
-                                  {achievement}
-                                </span>
+                                <span className="text-gray-700 dark:text-gray-300">{achievement}</span>
                               </motion.div>
                             ))}
                           </div>
@@ -744,66 +551,6 @@ export default function InteractiveJourneyMap() {
                   </div>
                 );
               })()}
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Celebration Animation */}
-        <AnimatePresence>
-          {showCelebration && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none"
-            >
-              {/* Confetti */}
-              {[...Array(50)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
-                  initial={{
-                    x: "50vw",
-                    y: "50vh",
-                    scale: 0,
-                    opacity: 0,
-                  }}
-                  animate={{
-                    x: `${50 + (Math.random() - 0.5) * 100}vw`,
-                    y: `${50 + (Math.random() - 0.5) * 100}vh`,
-                    scale: [0, 1, 0],
-                    opacity: [0, 1, 0],
-                    rotate: Math.random() * 360,
-                  }}
-                  transition={{
-                    duration: 2,
-                    delay: i * 0.02,
-                    ease: "easeOut",
-                  }}
-                />
-              ))}
-
-              {/* Success Message */}
-              <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0, opacity: 0 }}
-                className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl border border-gray-200 dark:border-gray-700 text-center"
-              >
-                <motion.div
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 1, ease: "easeInOut" }}
-                  className="w-16 h-16 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4"
-                >
-                  <Trophy className="text-white" size={32} />
-                </motion.div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                  Journey Complete! 🎉
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Thanks for exploring my developer journey!
-                </p>
-              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
