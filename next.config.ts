@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Force static export to avoid SSR issues
   output: 'export',
   trailingSlash: true,
   images: {

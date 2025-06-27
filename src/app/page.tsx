@@ -46,7 +46,7 @@ export default function Home() {
     <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       <BackgroundAnimation />
       <Navbar />
-      <main className="relative z-10">
+      <main className="relative z-10 overflow-x-hidden">
         <Hero />
         <About />
         <Projects />

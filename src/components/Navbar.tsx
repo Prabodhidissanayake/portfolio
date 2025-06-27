@@ -13,7 +13,7 @@ const navItems = [
   // { name: "Projects", href: "#projects" },
   { name: "Experience", href: "#experience" },
   { name: "Education", href: "#education" },
-  { name: "Developer Journey", href: "#developerJourney" },
+  { name: "Dev Journey", href: "#developerJourney" },
   { name: "Games", href: "#games" },
   { name: "Contact", href: "#contact" },
 ];
@@ -82,7 +82,7 @@ export default function Navbar() {
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8 text-nowrap">
             {navItems.map((item) => (
               <motion.button
                 key={item.name}
@@ -98,7 +98,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-4">
+          <div className="lg:hidden flex items-center space-x-4">
             <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Award, BookOpen } from "lucide-react";
+import { Calendar, MapPin, Award } from "lucide-react";
 
 const education = [
   {
@@ -116,16 +116,6 @@ export default function Education() {
 
         {/* Education */}
         <div className="mb-16">
-          <motion.h3
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-3xl font-bold text-gray-900 dark:text-white mb-8 flex items-center"
-          >
-            <BookOpen className="mr-3 text-blue-600" size={32} />
-            Education
-          </motion.h3>
 
           <div className="space-y-8">
             {education.map((edu, index) => (
