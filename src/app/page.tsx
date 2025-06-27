@@ -39,8 +39,8 @@ export default function Home() {
         </div>
         <div className="lg:hidden px-4 py-8 text-center">
           <p className="text-gray-600 dark:text-gray-400 text-sm italic">
-            📱 Check this section using desktop to see a cool video about my dev
-            journey
+            💻 Switch to desktop to explore my interactive dev journey and play
+            Snake Game! 🐍
           </p>
         </div>
         <Games />
