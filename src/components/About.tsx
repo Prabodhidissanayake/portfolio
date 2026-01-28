@@ -1,0 +1,209 @@
+"use client";
+
+import { motion } from "framer-motion";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Player = dynamic(
+  () => import("@lottiefiles/react-lottie-player").then((mod) => mod.Player),
+  { ssr: false }
+);
+
+const skillCategories = {
+  "Frontend Technologies": [
+    "React.js",
+    "Next.js",
+    "JavaScript",
+    "TypeScript",
+    "HTML",
+    "CSS",
+    "SASS",
+    "Tailwind CSS",
+    "styled-components",
+  ],
+  "Libraries & Frameworks": [
+    "Redux",
+    "React Query",
+    "Storybook",
+    "Framer Motion",
+    "Lucide React",
+    "Zod",
+  ],
+  "Backend & Database": [
+    "Node.js",
+    "Express.js",
+    "REST API",
+    "Elasticsearch",
+    "MongoDB",
+    "PostgreSQL",
+  ],
+  "Testing & Quality Assurance": [
+    "Jest",
+    "Mocha",
+    "Test Driven Development (TDD)",
+    "Unit Testing",
+    "Integration Testing",
+    "Code Coverage",
+  ],
+  "Tools & DevOps": [
+    "Git",
+    "GitHub",
+    "Docker",
+    "AWS",
+    "CI/CD",
+    "npm",
+    "VS Code",
+    "Figma",
+  ],
+  "Methodologies & Practices": [
+    "Agile",
+    "Mob Programming",
+    "UI/UX Design",
+    "Responsive Design",
+    "Performance Optimization",
+    "Code Review",
+  ],
+};
+
+export default function About() {
+  return (
+    <section id="about" className="py-24 section-padding" style={{ backgroundColor: 'var(--bg-light-green)' }}>
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: false }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            About Me
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            Passionate about creating exceptional digital experiences
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: false }}
+            className="flex justify-center lg:justify-start"
+          >
+            <div className="relative">
+              <div className="w-80 h-80 rounded-full overflow-hidden shadow-2xl">
+                <Image
+                  src="/profile.jpg"
+                  alt="Prabodhi Dissanayake"
+                  width={320}
+                  height={320}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full opacity-20 animate-pulse" style={{ background: `linear-gradient(to right, var(--color-primary), var(--color-secondary))` }}></div>
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 rounded-full opacity-20 animate-pulse" style={{ background: `linear-gradient(to right, var(--color-secondary), var(--color-accent))` }}></div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: false }}
+            className="space-y-8"
+          >
+            <div className="space-y-6">
+              <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                Currently working as a Frontend Developer at SuperYacht Times in
+                Amsterdam, where I have been contributing to innovative web
+                solutions since June 2023. I graduated with First Class Honors
+                in Software Engineering from the University of Plymouth and
+                completed an intensive Full Stack Bootcamp at School of Applied
+                Technology (salt) in Amsterdam.
+              </p>
+
+              <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                My expertise spans modern frontend technologies with a strong
+                foundation in React.js, Next.js, and TypeScript. I am passionate
+                about Test Driven Development, having practiced TDD and mob
+                programming extensively during my bootcamp training. I believe
+                in creating clean, maintainable code and delivering exceptional
+                user experiences.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: false }}
+        >
+          <div className="flex flex-col sm:flex-row items-center justify-center mb-16 gap-4">
+            <h3 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white text-center">
+              Skills & Technologies
+            </h3>
+            <div className="w-[13rem] h-24 lg:w-[200px] lg:h-32">
+              <Player
+                autoplay
+                loop
+                src="/animations/skills-animation.json"
+                style={{ height: "100%", width: "100%" }}
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {Object.entries(skillCategories).map(
+              ([category, skills], categoryIndex) => (
+                <motion.div
+                  key={category}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
+                  viewport={{ once: false }}
+                  className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 card-hover border border-gray-200 dark:border-gray-700"
+                >
+                  <div className="flex items-center mb-6">
+                    <div className="w-3 h-3 rounded-full mr-4" style={{ background: `linear-gradient(to right, var(--color-primary), var(--color-secondary))` }}></div>
+                    <h4 className="text-2xl font-bold text-gray-900 dark:text-white">
+                      {category}
+                    </h4>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    {skills.map((skill, index) => (
+                      <motion.span
+                        key={skill}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          duration: 0.4,
+                          delay: categoryIndex * 0.1 + index * 0.05,
+                        }}
+                        viewport={{ once: false }}
+                        whileHover={{ scale: 1.08, y: -2 }}
+                        className="px-5 py-3 rounded-full text-sm font-semibold cursor-default transition-all duration-200 shadow-sm hover:shadow-md"
+                        style={{
+                          background: 'linear-gradient(to right, rgba(50, 145, 182, 0.15), rgba(187, 142, 208, 0.15))',
+                          color: 'var(--color-primary)',
+                          borderWidth: '1px',
+                          borderStyle: 'solid',
+                          borderColor: 'var(--color-primary)'
+                        }}
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
+                </motion.div>
+              )
+            )}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
